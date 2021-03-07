@@ -8,54 +8,179 @@
     tools:context=".MainActivity">
 
     <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:elevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="TODAY" />
+
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
         android:id="@+id/bubbleViewSender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:elevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/bubbleDate">
 
-      <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:paddingBottom="2dp"
-          android:paddingEnd="2dp"
-          android:orientation="vertical">
-          <TextView
-              android:id="@+id/tvSender"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingEnd="8dp"
-              android:text="Sent Message" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp">
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:textColor="#888"
-              android:layout_gravity="end"
-              android:text="12:01"
-              android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvSender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Sent Message" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="12:01"
+                android:textColor="#888" />
 
 
-      </LinearLayout>
+        </LinearLayout>
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewSender2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/tvSender2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Another Sent Message" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="12:01"
+                android:textColor="#888" />
+
+
+        </LinearLayout>
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
 
-        <com.smarttoolfactory.bubblelayout.BubbleLayout
-            android:id="@+id/bubbleViewReceiver"
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewSender3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender2">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:elevation="1dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender">
+            android:orientation="vertical"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp">
 
             <TextView
-                android:id="@+id/tvReceiver"
+                android:id="@+id/tvSender3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Received Message" />
-        </com.smarttoolfactory.bubblelayout.BubbleLayout>
+                android:padding="4dp"
+                android:text="This is a message with no arrow Message" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="12:01"
+                android:textColor="#888" />
+
+
+        </LinearLayout>
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewReceiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:elevation="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender3">
+
+        <TextView
+            android:id="@+id/tvReceiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Received Message" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewReceiver2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:elevation="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubbleViewReceiver">
+
+        <TextView
+            android:id="@+id/tvReceiver2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Received Message Again" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewReceiver3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:elevation="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubbleViewReceiver2">
+
+        <TextView
+            android:id="@+id/tvReceiver3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Received Message with no arrow" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

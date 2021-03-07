@@ -70,7 +70,6 @@ class BubbleLayout : FrameLayout {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         // Measure dimensions
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
@@ -81,8 +80,8 @@ class BubbleLayout : FrameLayout {
 
         println("🎃 onMeasures widthSize: $widthSize, heightSize: $heightSize childCount: $childCount")
 
-        var maxWidth: Int = 0
-        var maxHeight: Int = 0
+        var maxContentWidth: Int = 0
+        var maxContentHeight: Int = 0
 
         for (i in 0..childCount) {
             val child: View? = getChildAt(i)
@@ -90,37 +89,70 @@ class BubbleLayout : FrameLayout {
             child?.measure(widthMeasureSpec, heightMeasureSpec)
             child?.let { child ->
                 println("🔥 onMeasure child #$i measuredWidth: ${child.measuredWidth}, width: ${child.width}, measuredHeight: ${child.measuredHeight}, height: ${child.height}")
-                if (child.measuredWidth > maxWidth) maxWidth = child.measuredWidth
-                maxHeight += child.measuredHeight
+                if (child.measuredWidth > maxContentWidth) maxContentWidth = child.measuredWidth
+                maxContentHeight += child.measuredHeight
             }
 
         }
 
-
         // Set rectangle for content area, arrow is excluded, on
         val alignment = modifier.arrowAlignment
-        if (alignment == ArrowAlignment.BOTTOM_RIGHT || alignment == ArrowAlignment.TOP_RIGHT) {
-            rectContent.set(0f, 0f, maxWidth.toFloat(), maxHeight.toFloat())
-        } else {
-            rectContent.set(
-                modifier.arrowWidth,
-                0f,
-                maxWidth.toFloat() + modifier.arrowWidth,
-                maxHeight.toFloat()
-            )
 
+        val isRightAligned =
+            alignment == ArrowAlignment.BOTTOM_RIGHT || alignment == ArrowAlignment.TOP_RIGHT
+
+        val isLeftAligned =
+            alignment == ArrowAlignment.BOTTOM_LEFT || alignment == ArrowAlignment.TOP_LEFT
+
+        var desiredWidth = resolveSize(
+            maxContentWidth,
+            widthMeasureSpec
+        )
+
+        if (isLeftAligned || isRightAligned) {
+            desiredWidth += modifier.arrowWidth.toInt()
         }
 
-        maxWidth += modifier.arrowWidth.toInt()
+        val desiredHeight: Int = resolveSize(maxContentHeight, heightMeasureSpec)
 
-        val desiredWidth = resolveSize(maxWidth, widthMeasureSpec)
-        val desiredHeight: Int = resolveSize(maxHeight, heightMeasureSpec)
+        when {
+
+            isLeftAligned -> {
+                rectContent.set(
+                    modifier.arrowWidth,
+                    0f,
+                    maxContentWidth.toFloat() + modifier.arrowWidth,
+                    maxContentHeight.toFloat()
+                )
+
+            }
+
+            isRightAligned -> {
+                rectContent.set(
+                    0f,
+                    0f,
+                    maxContentWidth.toFloat(),
+                    maxContentHeight.toFloat()
+                )
+
+            }
+
+            alignment == ArrowAlignment.NONE -> {
+                rectContent.set(
+                    0f,
+                    0f,
+                    maxContentWidth.toFloat(),
+                    maxContentHeight.toFloat()
+                )
+            }
+        }
+
 
         rectBubble.set(0f, 0f, desiredWidth.toFloat(), desiredHeight.toFloat())
 
         logMeasureSpecs("LOG: ", widthMeasureSpec, heightMeasureSpec)
 
-        setMeasuredDimension(desiredWidth, desiredHeight)
+        setMeasuredDimension(desiredWidth.toInt(), desiredHeight)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -170,10 +202,10 @@ class BubbleLayout : FrameLayout {
 
         canvas.drawPath(path, paint)
 
-//        paintDebug.color = Color.RED
-//        canvas.drawRect(rectBubble, paintDebug)
-//        paintDebug.color = Color.BLUE
-//        canvas.drawRect(rectContent, paintDebug)
+        paintDebug.color = Color.RED
+        canvas.drawRect(rectBubble, paintDebug)
+        paintDebug.color = Color.BLUE
+        canvas.drawRect(rectContent, paintDebug)
 
         outlineProvider = outlineProvider
     }
@@ -273,24 +305,75 @@ fun getBubbleClipPath(
 
     when (alignment) {
 
-
         ArrowAlignment.TOP_LEFT -> {
-            val radii = floatArrayOf(0f, 0f, radiusX, radiusY, radiusX, radiusY, radiusX, radiusY)
+
+            val topLeftX = if (modifier.isSecondary) radiusX else 0f
+            val topLeftY = if (modifier.isSecondary) radiusX else 0f
+
+            val radii = floatArrayOf(
+                topLeftX,
+                topLeftY,
+                radiusX,
+                radiusY,
+                radiusX,
+                radiusY,
+                radiusX,
+                radiusY
+            )
             path.addRoundRect(contentRect, radii, Path.Direction.CW)
 
         }
         ArrowAlignment.BOTTOM_LEFT -> {
-            val radii = floatArrayOf(radiusX, radiusY, radiusX, radiusY, radiusX, radiusY, 0f, 0f)
+
+            val bottomLeftX = if (modifier.isSecondary) radiusX else 0f
+            val bottomLeftY = if (modifier.isSecondary) radiusX else 0f
+
+            val radii = floatArrayOf(
+                radiusX,
+                radiusY,
+                radiusX,
+                radiusY,
+                radiusX,
+                radiusY,
+                bottomLeftX,
+                bottomLeftY
+            )
             path.addRoundRect(contentRect, radii, Path.Direction.CW)
         }
 
         ArrowAlignment.TOP_RIGHT -> {
-            val radii = floatArrayOf(radiusX, radiusY, 0f, 0f, radiusX, radiusY, radiusX, radiusY)
+
+            val topRightX = if (modifier.isSecondary) radiusX else 0f
+            val topRightY = if (modifier.isSecondary) radiusX else 0f
+
+            val radii = floatArrayOf(
+                radiusX,
+                radiusY,
+                topRightX,
+                topRightY,
+                radiusX,
+                radiusY,
+                radiusX,
+                radiusY
+            )
             path.addRoundRect(contentRect, radii, Path.Direction.CW)
         }
 
         ArrowAlignment.BOTTOM_RIGHT -> {
-            val radii = floatArrayOf(radiusX, radiusY, radiusX, radiusY, 0f, 0f, radiusX, radiusY)
+
+            val bottomRightX = if (modifier.isSecondary) radiusX else 0f
+            val bottomRightY = if (modifier.isSecondary) radiusX else 0f
+
+            val radii = floatArrayOf(
+                radiusX,
+                radiusY,
+                radiusX,
+                radiusY,
+                bottomRightX,
+                bottomRightY,
+                radiusX,
+                radiusY
+            )
             path.addRoundRect(contentRect, radii, Path.Direction.CW)
         }
 
@@ -301,7 +384,12 @@ fun getBubbleClipPath(
     }
 
 
-    createArrowPath(path = path, contentRect = contentRect, bubbleRect, modifier)
+    if (!modifier.isSecondary) createArrowPath(
+        path = path,
+        contentRect = contentRect,
+        bubbleRect,
+        modifier
+    )
 
     return path
 }
@@ -379,11 +467,17 @@ class Modifier {
 //    var margin = Margin(0f * dp, 0f * dp, 0f * dp, 0f * dp)
 
 
-    var arrowAlignment: ArrowAlignment = ArrowAlignment.BOTTOM_LEFT
+    var arrowAlignment: ArrowAlignment = ArrowAlignment.NONE
     var arrowWidth: Float = 14.0f
     var arrowHeight: Float = 14.0f
     var arrowRadius: Float = 0.0f
     var arrowOffset: Float = 0.0f
+
+    /**
+     * This has horizontal alignment but second or later chat bubble after first one
+     * that should align with first but not draw arrow
+     */
+    var isSecondary = false
 
     var shadowStyle: ShadowStyle = ShadowStyle.ELEVATION
     var shadowColor: Int = 0
