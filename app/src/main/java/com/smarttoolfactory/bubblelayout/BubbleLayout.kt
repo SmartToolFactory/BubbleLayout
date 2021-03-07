@@ -23,10 +23,12 @@ class BubbleLayout : FrameLayout {
         color = modifier.backgroundColor
     }
 
-    private val paintDebug = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.STROKE
-        strokeWidth = 4f
-        color = Color.RED
+    private val paintDebug by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE
+            strokeWidth = 4f
+            color = Color.RED
+        }
     }
 
     /**
@@ -103,7 +105,7 @@ class BubbleLayout : FrameLayout {
             rectContent.set(
                 modifier.arrowWidth,
                 0f,
-                maxWidth.toFloat(),
+                maxWidth.toFloat() + modifier.arrowWidth,
                 maxHeight.toFloat()
             )
 
@@ -277,6 +279,10 @@ fun getBubbleClipPath(
             path.addRoundRect(contentRect, radii, Path.Direction.CW)
 
         }
+        ArrowAlignment.BOTTOM_LEFT -> {
+            val radii = floatArrayOf(radiusX, radiusY, radiusX, radiusY, radiusX, radiusY, 0f, 0f)
+            path.addRoundRect(contentRect, radii, Path.Direction.CW)
+        }
 
         ArrowAlignment.TOP_RIGHT -> {
             val radii = floatArrayOf(radiusX, radiusY, 0f, 0f, radiusX, radiusY, radiusX, radiusY)
@@ -288,10 +294,6 @@ fun getBubbleClipPath(
             path.addRoundRect(contentRect, radii, Path.Direction.CW)
         }
 
-        ArrowAlignment.BOTTOM_LEFT -> {
-            val radii = floatArrayOf(radiusX, radiusY, radiusX, radiusY, 0f, 0f, radiusX, radiusY)
-            path.addRoundRect(contentRect, radii, Path.Direction.CW)
-        }
 
         else -> {
             path.addRoundRect(contentRect, modifier.radiusX, modifier.radiusY, Path.Direction.CW)
@@ -377,9 +379,9 @@ class Modifier {
 //    var margin = Margin(0f * dp, 0f * dp, 0f * dp, 0f * dp)
 
 
-    var arrowAlignment: ArrowAlignment = ArrowAlignment.TOP_RIGHT
-    var arrowWidth: Float = 20.0f
-    var arrowHeight: Float = 20.0f
+    var arrowAlignment: ArrowAlignment = ArrowAlignment.BOTTOM_LEFT
+    var arrowWidth: Float = 14.0f
+    var arrowHeight: Float = 14.0f
     var arrowRadius: Float = 0.0f
     var arrowOffset: Float = 0.0f
 
