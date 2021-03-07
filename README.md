@@ -6,4 +6,4 @@ like whatsapp, telegram or other messaging apps have
 
 | Default | Debug   |
 | ----------|----------------|
-| <img src="./screenshots/img.png" width="320"/> | <img src="./screenshots/img2.png" width="320"/> 
+| <img src="./screenshots/img1.png" width="320"/> | <img src="./screenshots/img2.png" width="320"/> 
