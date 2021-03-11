@@ -108,13 +108,15 @@ class BubbleLayout : FrameLayout {
         var desiredWidth = resolveSize(
             maxContentWidth,
             widthMeasureSpec
-        )
+        ) + paddingStart + paddingEnd
 
         if (isLeftAligned || isRightAligned) {
             desiredWidth += modifier.arrowWidth.toInt()
         }
 
-        val desiredHeight: Int = resolveSize(maxContentHeight, heightMeasureSpec)
+
+        val desiredHeight: Int =
+            resolveSize(maxContentHeight, heightMeasureSpec) + paddingTop + paddingBottom
 
         when {
 
@@ -122,8 +124,8 @@ class BubbleLayout : FrameLayout {
                 rectContent.set(
                     modifier.arrowWidth,
                     0f,
-                    maxContentWidth.toFloat() + modifier.arrowWidth,
-                    maxContentHeight.toFloat()
+                    maxContentWidth.toFloat() + modifier.arrowWidth + paddingStart + paddingEnd,
+                    maxContentHeight.toFloat() + paddingTop + paddingBottom
                 )
 
             }
@@ -132,8 +134,8 @@ class BubbleLayout : FrameLayout {
                 rectContent.set(
                     0f,
                     0f,
-                    maxContentWidth.toFloat(),
-                    maxContentHeight.toFloat()
+                    maxContentWidth.toFloat() + paddingStart + paddingEnd,
+                    maxContentHeight.toFloat() + paddingTop + paddingBottom
                 )
 
             }
@@ -142,8 +144,8 @@ class BubbleLayout : FrameLayout {
                 rectContent.set(
                     0f,
                     0f,
-                    maxContentWidth.toFloat(),
-                    maxContentHeight.toFloat()
+                    maxContentWidth.toFloat() + paddingStart + paddingEnd,
+                    maxContentHeight.toFloat() + paddingTop + paddingBottom
                 )
             }
         }

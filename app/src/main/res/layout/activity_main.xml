@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:elevation="1dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,7 +22,6 @@
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="TODAY" />
 
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
@@ -136,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:elevation="1dp"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender3">
 
@@ -143,7 +144,6 @@
             android:id="@+id/tvReceiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="Received Message" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
@@ -154,6 +154,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:elevation="1dp"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bubbleViewReceiver">
 
@@ -161,7 +162,6 @@
             android:id="@+id/tvReceiver2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="Received Message Again" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
@@ -172,6 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:elevation="1dp"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bubbleViewReceiver2">
 
@@ -179,7 +180,6 @@
             android:id="@+id/tvReceiver3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="Received Message with no arrow" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
