@@ -9,6 +9,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        drawBubbles()
+
+
+    }
+
+    private fun drawBubbles() {
         val dateBubble = findViewById<BubbleLayout>(R.id.bubbleDate)
         dateBubble.modifier.apply {
             arrowAlignment = ArrowAlignment.NONE
@@ -20,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         // Sent bubble
         val senderBubble1 = findViewById<BubbleLayout>(R.id.bubbleViewSender)
         senderBubble1.modifier.apply {
-            arrowAlignment = ArrowAlignment.TOP_RIGHT
+            arrowAlignment = ArrowAlignment.RIGHT_TOP
+            arrowOffsetY = 5f
         }
 
         senderBubble1.update(modifier = senderBubble1.modifier)
@@ -28,15 +35,15 @@ class MainActivity : AppCompatActivity() {
 
         val senderBubble2 = findViewById<BubbleLayout>(R.id.bubbleViewSender2)
         senderBubble2.modifier.apply {
-            arrowAlignment = ArrowAlignment.BOTTOM_RIGHT
+            arrowAlignment = ArrowAlignment.RIGHT_BOTTOM
         }
 
         senderBubble2.update(modifier = senderBubble2.modifier)
 
         val senderBubble3 = findViewById<BubbleLayout>(R.id.bubbleViewSender3)
         senderBubble3.modifier.apply {
-            arrowAlignment = ArrowAlignment.BOTTOM_RIGHT
-            isSecondary = true
+            arrowAlignment = ArrowAlignment.RIGHT_BOTTOM
+            withArrow = false
         }
 
         senderBubble3.update(modifier = senderBubble3.modifier)
@@ -46,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR1 = receiverBubble.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.BOTTOM_LEFT
+            arrowAlignment = ArrowAlignment.LEFT_BOTTOM
         }
 
         receiverBubble.update(modifierR1)
@@ -55,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR2 = receiverBubble2.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.TOP_LEFT
+            arrowAlignment = ArrowAlignment.LEFT_TOP
         }
 
         receiverBubble2.update(modifierR2)
@@ -65,12 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR3 = receiverBubble3.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.TOP_LEFT
-            isSecondary = true
+            arrowAlignment = ArrowAlignment.LEFT_TOP
+            withArrow = false
         }
 
         receiverBubble3.update(modifierR3)
-
-
     }
 }
