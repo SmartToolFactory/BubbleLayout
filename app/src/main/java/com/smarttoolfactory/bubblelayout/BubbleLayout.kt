@@ -99,11 +99,9 @@ class BubbleLayout : FrameLayout {
         // Set rectangle for content area, arrow is excluded, on
         val alignment = modifier.arrowAlignment
 
-        val isRightAligned =
-            alignment == RIGHT_BOTTOM || alignment == RIGHT_TOP
+        val isRightAligned = isHorizontalRightAligned(alignment)
 
-        val isLeftAligned =
-            alignment == LEFT_BOTTOM || alignment == LEFT_TOP
+        val isLeftAligned = isHorizontalLeftAligned(alignment)
 
         var desiredWidth = resolveSize(
             maxContentWidth,
@@ -163,7 +161,12 @@ class BubbleLayout : FrameLayout {
 
         val alignment = modifier.arrowAlignment
 
-        if (alignment == LEFT_BOTTOM || alignment == LEFT_TOP) {
+        val isRightAligned = isHorizontalRightAligned(alignment)
+
+        val isLeftAligned = isHorizontalLeftAligned(alignment)
+
+
+        if (isLeftAligned) {
 
             for (i in 0..childCount) {
                 val child: View? = getChildAt(i)
@@ -206,10 +209,10 @@ class BubbleLayout : FrameLayout {
 
         canvas.drawPath(path, paint)
 
-        paintDebug.color = Color.RED
-        canvas.drawRect(rectBubble, paintDebug)
-        paintDebug.color = Color.BLUE
-        canvas.drawRect(rectContent, paintDebug)
+//        paintDebug.color = Color.RED
+//        canvas.drawRect(rectBubble, paintDebug)
+//        paintDebug.color = Color.BLUE
+//        canvas.drawRect(rectContent, paintDebug)
 
         outlineProvider = outlineProvider
     }
@@ -287,7 +290,7 @@ class BubbleLayout : FrameLayout {
 /**
  * Function that returns bubble path.
  *
- * @param modifier sum of properties of this layout which includes arrow alignement, position,etc.
+ * @param modifier sum of properties of this layout which includes arrow alignemnt, position,etc.
  * @param contentRect rectangle of content area
  * @param bubbleRect rectangle of total area of this layout
  */
@@ -302,7 +305,7 @@ fun getBubbleClipPath(
 
     getRoundedRectPath(modifier, path, contentRect)
 
-    if (modifier.withArrow) createArrowPath(
+    if (modifier.withArrow) createHorizontalArrowPath(
         path = path,
         contentRect = contentRect,
         bubbleRect,
@@ -342,14 +345,15 @@ private fun getRoundedRectPath(
 
             LEFT_TOP -> {
 
-                val topLeftX =
+                val radiusTopLeftX =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val topLeftY =
+
+                val radiusTopLeftY =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
 
                 val radii = floatArrayOf(
-                    topLeftX,
-                    topLeftY,
+                    radiusTopLeftX,
+                    radiusTopLeftY,
                     radiusX,
                     radiusY,
                     radiusX,
@@ -362,9 +366,9 @@ private fun getRoundedRectPath(
             }
             LEFT_BOTTOM -> {
 
-                val bottomLeftX =
+                val radiusBottomLeftX =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val bottomLeftY =
+                val radiusBottomLeftY =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
 
 
@@ -375,24 +379,28 @@ private fun getRoundedRectPath(
                     radiusY,
                     radiusX,
                     radiusY,
-                    bottomLeftX,
-                    bottomLeftY
+                    radiusBottomLeftX,
+                    radiusBottomLeftY
                 )
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
             }
 
+            LEFT_CENTER -> {
+
+            }
+
             RIGHT_TOP -> {
 
-                val topRightX =
+                val radiusTopRightX =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val topRightY =
+                val radiusTopRightY =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
 
                 val radii = floatArrayOf(
                     radiusX,
                     radiusY,
-                    topRightX,
-                    topRightY,
+                    radiusTopRightX,
+                    radiusTopRightY,
                     radiusX,
                     radiusY,
                     radiusX,
@@ -403,9 +411,9 @@ private fun getRoundedRectPath(
 
             RIGHT_BOTTOM -> {
 
-                val bottomRightX =
+                val radiusBottomRightX =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val bottomRightY =
+                val radiusBottomRightY =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
 
                 val radii = floatArrayOf(
@@ -413,8 +421,8 @@ private fun getRoundedRectPath(
                     radiusY,
                     radiusX,
                     radiusY,
-                    bottomRightX,
-                    bottomRightY,
+                    radiusBottomRightX,
+                    radiusBottomRightY,
                     radiusX,
                     radiusY
                 )
@@ -434,30 +442,37 @@ private fun getRoundedRectPath(
 }
 
 /**
- * Creates path for arrow
+ * Creates path for bubbles that arrow should either aling left or right
  */
-fun createArrowPath(path: Path, contentRect: RectF, bubbleRect: RectF, modifier: Modifier) {
+fun createHorizontalArrowPath(
+    path: Path,
+    contentRect: RectF,
+    bubbleRect: RectF,
+    modifier: Modifier
+) {
 
     val contentHeight = contentRect.height()
     val contentWidth = contentRect.width()
 
-    val arrowWidth = modifier.arrowWidth
     val contentLeft = contentRect.left
     val contentRight = contentRect.right
     val contentTop = contentRect.top
     val contentBottom = contentRect.bottom
 
+    val arrowWidth = modifier.arrowWidth
 
+    // Height of the arrow is limited to height of the bubble
     val arrowHeight =
         if (modifier.arrowHeight + modifier.radiusY * 2 > contentHeight)
             contentHeight - modifier.radiusY * 2 else modifier.arrowHeight
 
-    // This is offset from top or bottom. Maximum offset + arrow height cannot be bigger
-    // than bottom of bubble or smaller than top of bubble. Y increases as we go to bottom
-    val offsetY =
-        if (modifier.arrowOffsetY + arrowHeight > contentHeight) {
-            contentHeight - arrowHeight
-        } else modifier.arrowOffsetY
+
+    // This is offset from top/bottom or center for arrows on left or right.
+    // Maximum offset + arrow height cannot be bigger
+    // than bottom of bubble or smaller than top of bubble.
+    val arrowTop = calculateVerticalArrowOffset(modifier, arrowHeight, contentTop, contentHeight)
+
+    val arrowBottom = arrowTop + arrowHeight
 
 
     val arrowShape = modifier.arrowShape
@@ -465,29 +480,29 @@ fun createArrowPath(path: Path, contentRect: RectF, bubbleRect: RectF, modifier:
     when (modifier.arrowAlignment) {
 
         LEFT_TOP -> {
-            // move to top left corner of the content
-            path.moveTo(contentLeft, contentTop + offsetY)
+            // move to top of arrow at the top of left corner
+            path.moveTo(contentLeft, contentTop + arrowTop)
 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
                     // Draw horizontal line to left
-                    path.lineTo(0f, contentTop + offsetY)
-                    path.lineTo(contentLeft, contentTop + offsetY + arrowHeight)
+                    path.lineTo(0f, contentTop + arrowTop)
+                    path.lineTo(contentLeft, contentTop + arrowBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
-                    path.lineTo(0f, contentTop + offsetY + arrowHeight / 2f)
-                    path.lineTo(contentLeft, contentTop + offsetY + arrowHeight)
+                    path.lineTo(0f, contentTop + arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentLeft, contentTop + arrowBottom)
                 }
 
                 ArrowShape.CURVED -> {
 
                     val x1 = 0f
-                    val y1 = contentTop + offsetY
+                    val y1 = contentTop + arrowTop
 
                     val x2 = contentLeft
-                    val y2 = contentTop + offsetY + arrowHeight
+                    val y2 = contentTop + arrowTop + arrowHeight
 
                     path.lineTo(arrowWidth - contentLeft * .9f, y1)
                     path.quadTo(x1, y1, x2, y2)
@@ -502,92 +517,159 @@ fun createArrowPath(path: Path, contentRect: RectF, bubbleRect: RectF, modifier:
 
         LEFT_BOTTOM -> {
 
-            // move to bottom left corner of the content
-            path.moveTo(contentLeft, contentBottom - offsetY)
+            // move to top of arrow at the bottom left corner
+            path.moveTo(contentLeft, arrowTop)
 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
                     // Draw horizontal line to left
-                    path.lineTo(0f, contentBottom - offsetY)
-                    path.lineTo(contentLeft, contentBottom - offsetY - arrowHeight)
+                    path.lineTo(0f, arrowBottom)
+                    path.lineTo(contentLeft, arrowBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
                     // Draw horizontal line to left
-                    path.lineTo(contentLeft, contentBottom - offsetY - arrowHeight)
-                    path.lineTo(0f, contentBottom - offsetY - arrowHeight / 2f)
+                    path.lineTo(0f, arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentLeft, arrowBottom)
                 }
 
                 ArrowShape.CURVED -> {
 
                 }
-
             }
-
             path.close()
+        }
+
+        // TODO
+        LEFT_CENTER -> {
 
         }
 
         RIGHT_TOP -> {
 
             // move to top right corner of the content
-            path.moveTo(contentRight, contentTop + offsetY)
+            path.moveTo(contentRight, contentTop + arrowTop)
 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
-                    path.lineTo(contentRight + arrowWidth, contentTop + offsetY)
-                    path.lineTo(contentRight, contentTop + offsetY + arrowHeight)
+                    path.lineTo(contentRight + arrowWidth, contentTop + arrowTop)
+                    path.lineTo(contentRight, contentTop + arrowBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
-                    path.lineTo(contentRight + arrowWidth, contentTop + offsetY + arrowHeight / 2f)
-                    path.lineTo(contentRight, contentTop + offsetY + arrowHeight)
+                    path.lineTo(contentRight + arrowWidth, contentTop + arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentRight, contentTop + arrowBottom)
                 }
 
                 ArrowShape.CURVED -> {
 
                 }
             }
-
-
             path.close()
         }
 
         RIGHT_BOTTOM -> {
 
             // move to bottom right corner of the content
-            path.moveTo(contentRight, contentBottom - offsetY)
+            path.moveTo(contentRight, arrowTop)
 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
-                    path.lineTo(contentRight + arrowWidth, contentBottom - offsetY)
-                    path.lineTo(contentRight, contentBottom - offsetY - arrowHeight)
+                    path.lineTo(contentRight + arrowWidth, arrowBottom)
+                    path.lineTo(contentRight, arrowBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
-                    path.lineTo(
-                        contentRight + arrowWidth,
-                        contentBottom - offsetY - arrowHeight / 2f
-                    )
-                    path.lineTo(contentRight, contentBottom - offsetY - arrowHeight)
+                    path.lineTo(contentRight + arrowWidth, arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentRight, arrowBottom)
                 }
 
                 ArrowShape.CURVED -> {
 
                 }
-
             }
-
-
             path.close()
         }
+
+        RIGHT_CENTER -> {
+
+
+
+        }
+
         NONE -> Unit
     }
 }
 
+/**
+ * Calculate top position of the arrow on either left or right side
+ */
+private fun calculateVerticalArrowOffset(
+    modifier: Modifier,
+    arrowHeight: Float,
+    contentTop: Float,
+    contentHeight: Float
+): Float {
+
+    val alignment = modifier.arrowAlignment
+
+    var arrowTop = when {
+        isHorizontalTopAligned(alignment) -> {
+            contentTop + modifier.arrowOffsetY
+        }
+        isHorizontalBottomAligned(alignment) -> {
+            contentHeight + modifier.arrowOffsetY - arrowHeight
+        }
+        else -> {
+            (contentHeight - arrowHeight) / 2f + modifier.arrowOffsetY
+        }
+    }
+
+    if (arrowTop < 0) arrowTop = 0f
+
+    if (arrowTop + arrowHeight > contentHeight) arrowTop = contentHeight - arrowHeight
+
+    return arrowTop
+
+}
+
+/**
+ * Arrow is on left side of the bubble
+ */
+private fun isHorizontalLeftAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == LEFT_TOP || alignment == LEFT_BOTTOM || alignment == LEFT_CENTER)
+}
+
+/**
+ * Arrow is on right side of the bubble
+ */
+private fun isHorizontalRightAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == RIGHT_TOP || alignment == RIGHT_BOTTOM || alignment == RIGHT_CENTER)
+}
+
+/**
+ * Arrow is on top left or right side of the bubble
+ */
+private fun isHorizontalTopAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == LEFT_TOP || alignment == RIGHT_TOP)
+}
+
+/**
+ * Arrow is on top left or right side of the bubble
+ */
+private fun isHorizontalBottomAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == LEFT_BOTTOM || alignment == RIGHT_BOTTOM)
+}
+
+/**
+ * Arrow is on top left or right side of the bubble
+ */
+private fun isHorizontalCenterAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == LEFT_BOTTOM || alignment == RIGHT_BOTTOM)
+}
 
 class Modifier {
 
@@ -623,7 +705,7 @@ class Modifier {
     var arrowHeight: Float = 14.0f
     var arrowRadius: Float = 0.0f
 
-    var arrowShape: ArrowShape = ArrowShape.TRIANGLE_ISOSCELES
+    var arrowShape: ArrowShape = ArrowShape.TRIANGLE_RIGHT
 
     /**
      * Vertical offset for arrow. If arrow is aligned to top it moves arrow downwards.
@@ -679,8 +761,10 @@ enum class ArrowShape {
 enum class ArrowAlignment {
     LEFT_TOP,
     LEFT_BOTTOM,
+    LEFT_CENTER,
     RIGHT_TOP,
     RIGHT_BOTTOM,
+    RIGHT_CENTER,
     NONE
 }
 
@@ -695,47 +779,3 @@ fun Context.dp2Px(dpValue: Float): Float {
         (dpValue + 0.5f)
     }
 }
-
-//abstract class Modifier {
-//
-//    internal var backgroundColor: Int = 0
-//
-//    fun backgroundColor(color: Int): Modifier = apply { backgroundColor = color }
-//
-//
-////    abstract var padding: Padding
-////    abstract margin: Margin
-////
-////    abstract arrowAlignment: ArrowAlignment
-////    abstract arrowWidth: Float
-////    abstract arrowHeight: Float
-////    abstract arrowRadius: Float
-////    abstract arrowOffset: Float
-////
-////    abstract shadowStyle: ShadowStyle
-////    abstract shadowColor: Int
-//
-//
-//}
-
-//fun Modifier.arrowAlignment(arrowAlignment: ArrowAlignment): Modifier =
-//    apply { this.arrowAlignment = arrowAlignment }
-//
-//fun Modifier.arrowWidth(width: Float): Modifier = apply {
-//    require(width > 0)
-//    arrowHeight = width
-//}
-//
-//fun Modifier.arrowHeight(height: Float): Modifier = apply {
-//    require(height > 0)
-//    arrowHeight = height
-//}
-
-//class ArrowModifier(
-//    var arrowAlignment: ArrowAlignment,
-//    var arrowWidth: Float,
-//    var arrowHeight: Float,
-//    var arrowRadius: Float,
-//    var arrowOffset: Float
-//) : Modifier
-

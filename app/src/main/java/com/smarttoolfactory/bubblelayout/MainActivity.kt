@@ -23,11 +23,13 @@ class MainActivity : AppCompatActivity() {
         dateBubble.update(modifier = dateBubble.modifier)
 
 
-        // Sent bubble
+        /*
+            Sent bubble
+         */
         val senderBubble1 = findViewById<BubbleLayout>(R.id.bubbleViewSender)
         senderBubble1.modifier.apply {
             arrowAlignment = ArrowAlignment.RIGHT_TOP
-            arrowOffsetY = 5f
+            arrowOffsetY = 18f
         }
 
         senderBubble1.update(modifier = senderBubble1.modifier)
@@ -48,12 +50,15 @@ class MainActivity : AppCompatActivity() {
 
         senderBubble3.update(modifier = senderBubble3.modifier)
 
-        // Received Bubble
+        /*
+            Received Bubbles
+         */
         val receiverBubble = findViewById<BubbleLayout>(R.id.bubbleViewReceiver)
 
         val modifierR1 = receiverBubble.modifier.apply {
             backgroundColor = Color.WHITE
             arrowAlignment = ArrowAlignment.LEFT_BOTTOM
+            arrowOffsetY = -20f
         }
 
         receiverBubble.update(modifierR1)

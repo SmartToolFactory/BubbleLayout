@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="Sent Message" />
+                android:text="Arrow RIGHT_TOP with offset 5" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="Another Sent Message" />
+                android:text="Arrow RIGHT_BOTTOM" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="This is a message with no arrow Message" />
+                android:text="Arrow RIGHT_BOTTOM withArrow=false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
             android:id="@+id/tvReceiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Received Message" />
+            android:text="Arrow LEFT_BOTTOM offset=-20" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
 
@@ -162,7 +162,7 @@
             android:id="@+id/tvReceiver2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Received Message Again" />
+            android:text="Arrow LEFT_TOP" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
 
@@ -180,7 +180,7 @@
             android:id="@+id/tvReceiver3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Received Message with no arrow" />
+            android:text="Arrow LEFT_TOP withArrow=false" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
