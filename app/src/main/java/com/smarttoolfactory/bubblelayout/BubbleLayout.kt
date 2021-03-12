@@ -549,7 +549,6 @@ fun createArrowPath(path: Path, contentRect: RectF, bubbleRect: RectF, modifier:
                 ArrowShape.CURVED -> {
 
                 }
-
             }
 
 
@@ -587,7 +586,6 @@ fun createArrowPath(path: Path, contentRect: RectF, bubbleRect: RectF, modifier:
         }
         NONE -> Unit
     }
-
 }
 
 
@@ -619,10 +617,6 @@ class Modifier {
      * Scale to set initial values as dp
      */
 //    var dp: Float = 1f
-
-//    var padding = Padding(0f * dp, 0f * dp, 0f * dp, 0f * dp)
-//    var margin = Margin(0f * dp, 0f * dp, 0f * dp, 0f * dp)
-
 
     var arrowAlignment: ArrowAlignment = NONE
     var arrowWidth: Float = 14.0f
@@ -690,6 +684,18 @@ enum class ArrowAlignment {
     NONE
 }
 
+/**
+ * Convert density to pixel to draw on Canvas
+ */
+fun Context.dp2Px(dpValue: Float): Float {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }
+}
+
 //abstract class Modifier {
 //
 //    internal var backgroundColor: Int = 0
@@ -712,19 +718,6 @@ enum class ArrowAlignment {
 //
 //}
 
-/**
- * Convert density to pixel to draw on Canvas
- */
-fun Context.dp2Px(dpValue: Float): Float {
-    return try {
-        val scale = resources.displayMetrics.density
-        (dpValue * scale + 0.5f)
-    } catch (e: Exception) {
-        (dpValue + 0.5f)
-    }
-}
-
-
 //fun Modifier.arrowAlignment(arrowAlignment: ArrowAlignment): Modifier =
 //    apply { this.arrowAlignment = arrowAlignment }
 //
@@ -737,7 +730,6 @@ fun Context.dp2Px(dpValue: Float): Float {
 //    require(height > 0)
 //    arrowHeight = height
 //}
-
 
 //class ArrowModifier(
 //    var arrowAlignment: ArrowAlignment,
