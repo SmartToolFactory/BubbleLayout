@@ -50,6 +50,14 @@ class MainActivity : AppCompatActivity() {
 
         senderBubble3.update(modifier = senderBubble3.modifier)
 
+        val senderBubble4 = findViewById<BubbleLayout>(R.id.bubbleViewSender4)
+        senderBubble4.modifier.apply {
+            arrowAlignment = ArrowAlignment.RIGHT_CENTER
+            arrowShape = ArrowShape.TRIANGLE_ISOSCELES
+        }
+
+        senderBubble4.update(modifier = senderBubble4.modifier)
+
         /*
             Received Bubbles
          */
@@ -82,5 +90,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         receiverBubble3.update(modifierR3)
+
+
+        val receiverBubble4 = findViewById<BubbleLayout>(R.id.bubbleViewReceiver4)
+
+        val modifierR4 = receiverBubble4.modifier.apply {
+            backgroundColor = Color.WHITE
+            arrowAlignment = ArrowAlignment.LEFT_CENTER
+            arrowShape = ArrowShape.TRIANGLE_ISOSCELES
+        }
+
+        receiverBubble4.update(modifierR4)
     }
 }

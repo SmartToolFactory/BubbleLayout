@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ece5dd"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.smarttoolfactory.bubblelayout.BubbleLayout
         android:id="@+id/bubbleDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:elevation="1dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/tvDate"
@@ -30,10 +28,9 @@
         android:id="@+id/bubbleViewSender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginTop="10dp"
-        android:elevation="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbleDate">
+        android:elevation="1dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,10 +61,9 @@
         android:id="@+id/bubbleViewSender2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginTop="4dp"
-        android:elevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender">
+        android:elevation="2dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -99,10 +95,9 @@
         android:id="@+id/bubbleViewSender3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginTop="4dp"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender2">
+        android:elevation="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -131,14 +126,49 @@
 
 
     <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewSender4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="4dp"
+        android:elevation="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/tvSender4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Arrow RIGHT_CENTER" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="12:01"
+                android:textColor="#888" />
+
+
+        </LinearLayout>
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+
+    <!-- RECEIVED BUBBLES-->
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
         android:id="@+id/bubbleViewReceiver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginTop="10dp"
         android:elevation="1dp"
-        android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbleViewSender3">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/tvReceiver"
@@ -152,11 +182,10 @@
         android:id="@+id/bubbleViewReceiver2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginTop="4dp"
         android:elevation="1dp"
-        android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbleViewReceiver">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/tvReceiver2"
@@ -172,9 +201,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:elevation="1dp"
-        android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbleViewReceiver2">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/tvReceiver3"
@@ -183,4 +210,20 @@
             android:text="Arrow LEFT_TOP withArrow=false" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewReceiver4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:elevation="1dp"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvReceiver4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow LEFT_CENTER" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

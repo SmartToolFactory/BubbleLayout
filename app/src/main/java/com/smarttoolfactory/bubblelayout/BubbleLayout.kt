@@ -180,7 +180,7 @@ class BubbleLayout : FrameLayout {
                 }
 
             }
-        } else {
+        } else if(isRightAligned){
 
             for (i in 0..childCount) {
                 val child: View? = getChildAt(i)
@@ -214,7 +214,9 @@ class BubbleLayout : FrameLayout {
 //        paintDebug.color = Color.BLUE
 //        canvas.drawRect(rectContent, paintDebug)
 
-        outlineProvider = outlineProvider
+      if (modifier.shadowStyle == ShadowStyle.ELEVATION) {
+          outlineProvider = outlineProvider
+      }
     }
 
     fun update(modifier: Modifier) {
@@ -222,7 +224,6 @@ class BubbleLayout : FrameLayout {
         paint.color = modifier.backgroundColor
         invalidate()
     }
-
 
     override fun getOutlineProvider(): ViewOutlineProvider? {
         return object : ViewOutlineProvider() {
@@ -385,10 +386,6 @@ private fun getRoundedRectPath(
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
             }
 
-            LEFT_CENTER -> {
-
-            }
-
             RIGHT_TOP -> {
 
                 val radiusTopRightX =
@@ -451,6 +448,10 @@ fun createHorizontalArrowPath(
     modifier: Modifier
 ) {
 
+    val alignment = modifier.arrowAlignment
+
+    if (alignment == NONE) return
+
     val contentHeight = contentRect.height()
     val contentWidth = contentRect.width()
 
@@ -477,42 +478,29 @@ fun createHorizontalArrowPath(
 
     val arrowShape = modifier.arrowShape
 
-    when (modifier.arrowAlignment) {
+    when (alignment) {
 
         LEFT_TOP -> {
             // move to top of arrow at the top of left corner
-            path.moveTo(contentLeft, contentTop + arrowTop)
+            path.moveTo(contentLeft, arrowTop)
 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
                     // Draw horizontal line to left
-                    path.lineTo(0f, contentTop + arrowTop)
-                    path.lineTo(contentLeft, contentTop + arrowBottom)
+                    path.lineTo(0f, arrowTop)
+                    path.lineTo(contentLeft, arrowBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
-                    path.lineTo(0f, contentTop + arrowTop + arrowHeight / 2f)
-                    path.lineTo(contentLeft, contentTop + arrowBottom)
+                    path.lineTo(0f, arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentLeft, arrowBottom)
                 }
 
                 ArrowShape.CURVED -> {
 
-                    val x1 = 0f
-                    val y1 = contentTop + arrowTop
-
-                    val x2 = contentLeft
-                    val y2 = contentTop + arrowTop + arrowHeight
-
-                    path.lineTo(arrowWidth - contentLeft * .9f, y1)
-                    path.quadTo(x1, y1, x2, y2)
-                    //                path.quadTo((x1 + x2) / 4f, (y1 + y2) * 3 / 4f, x2, y2)
-                    //                path.cubicTo((x1 + x2) * .2f, y1*1.2f, (x1 + x2) * .7f, (y1 + y2) * .35f, x2, y2)
                 }
             }
-
-            path.close()
-
         }
 
         LEFT_BOTTOM -> {
@@ -538,36 +526,54 @@ fun createHorizontalArrowPath(
 
                 }
             }
-            path.close()
         }
 
         // TODO
         LEFT_CENTER -> {
 
-        }
-
-        RIGHT_TOP -> {
-
-            // move to top right corner of the content
-            path.moveTo(contentRight, contentTop + arrowTop)
+            // move to top of arrow at the top of left corner
+            path.moveTo(contentLeft, arrowTop)
 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
-                    path.lineTo(contentRight + arrowWidth, contentTop + arrowTop)
-                    path.lineTo(contentRight, contentTop + arrowBottom)
+                    // Draw horizontal line to left
+                    path.lineTo(0f, arrowTop)
+                    path.lineTo(contentLeft, arrowBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
-                    path.lineTo(contentRight + arrowWidth, contentTop + arrowTop + arrowHeight / 2f)
-                    path.lineTo(contentRight, contentTop + arrowBottom)
+                    path.lineTo(0f, arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentLeft, arrowBottom)
                 }
 
                 ArrowShape.CURVED -> {
 
                 }
             }
-            path.close()
+        }
+
+        RIGHT_TOP -> {
+
+            // move to top right corner of the content
+            path.moveTo(contentRight, arrowTop)
+
+            when (arrowShape) {
+
+                ArrowShape.TRIANGLE_RIGHT -> {
+                    path.lineTo(contentRight + arrowWidth, arrowTop)
+                    path.lineTo(contentRight, arrowBottom)
+                }
+
+                ArrowShape.TRIANGLE_ISOSCELES -> {
+                    path.lineTo(contentRight + arrowWidth, arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentRight, arrowBottom)
+                }
+
+                ArrowShape.CURVED -> {
+
+                }
+            }
         }
 
         RIGHT_BOTTOM -> {
@@ -591,17 +597,36 @@ fun createHorizontalArrowPath(
 
                 }
             }
-            path.close()
         }
 
         RIGHT_CENTER -> {
 
+            // move to top right corner of the content
+            path.moveTo(contentRight, arrowTop)
 
+            when (arrowShape) {
+
+                ArrowShape.TRIANGLE_RIGHT -> {
+                    path.lineTo(contentRight + arrowWidth, arrowTop)
+                    path.lineTo(contentRight, arrowBottom)
+                }
+
+                ArrowShape.TRIANGLE_ISOSCELES -> {
+                    path.lineTo(contentRight + arrowWidth, arrowTop + arrowHeight / 2f)
+                    path.lineTo(contentRight, arrowBottom)
+                }
+
+                ArrowShape.CURVED -> {
+
+                }
+            }
 
         }
 
         NONE -> Unit
     }
+
+    path.close()
 }
 
 /**
