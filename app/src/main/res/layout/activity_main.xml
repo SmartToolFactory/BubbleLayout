@@ -226,4 +226,19 @@
             android:text="Arrow LEFT_CENTER" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:elevation="1dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow BOTTOM_LEFT" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

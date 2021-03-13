@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         senderBubble3.update(modifier = senderBubble3.modifier)
 
+
         val senderBubble4 = findViewById<BubbleLayout>(R.id.bubbleViewSender4)
         senderBubble4.modifier.apply {
             arrowAlignment = ArrowAlignment.RIGHT_CENTER
@@ -101,5 +102,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         receiverBubble4.update(modifierR4)
+
+
+        val bubbleBottom1 = findViewById<BubbleLayout>(R.id.bubbleViewBottom)
+
+        val modifierBottom1 = bubbleBottom1.modifier.apply {
+            backgroundColor = Color.rgb(41,182,246)
+            arrowAlignment = ArrowAlignment.BOTTOM_LEFT
+            arrowShape = ArrowShape.TRIANGLE_ISOSCELES
+        }
+
+        bubbleBottom1.update(modifierBottom1)
     }
 }
