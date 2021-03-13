@@ -264,14 +264,13 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
-                    // Draw horizontal line to left
                     path.lineTo(arrowLeft, arrowBottom)
-                    path.lineTo(arrowRight, arrowBottom)
+                    path.lineTo(arrowRight, contentBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
                     path.lineTo(arrowLeft + arrowWidth / 2f, arrowBottom)
-                    path.lineTo(arrowRight, arrowBottom)
+                    path.lineTo(arrowRight, contentBottom)
                 }
 
                 ArrowShape.CURVED -> {
@@ -288,14 +287,13 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) 
             when (arrowShape) {
 
                 ArrowShape.TRIANGLE_RIGHT -> {
-                    // Draw horizontal line to left
-                    path.lineTo(arrowLeft, arrowBottom)
                     path.lineTo(arrowRight, arrowBottom)
+                    path.lineTo(arrowRight, contentBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
                     path.lineTo(arrowLeft + arrowWidth / 2f, arrowBottom)
-                    path.lineTo(arrowRight, arrowBottom)
+                    path.lineTo(arrowRight, contentBottom)
                 }
 
                 ArrowShape.CURVED -> {
@@ -303,6 +301,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) 
                 }
             }
         }
+
 
         ArrowAlignment.BOTTOM_CENTER -> {
 
@@ -313,12 +312,12 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) 
                 ArrowShape.TRIANGLE_RIGHT -> {
                     // Draw horizontal line to left
                     path.lineTo(arrowLeft, arrowBottom)
-                    path.lineTo(arrowRight, arrowBottom)
+                    path.lineTo(arrowRight, contentBottom)
                 }
 
                 ArrowShape.TRIANGLE_ISOSCELES -> {
                     path.lineTo(arrowLeft + arrowWidth / 2f, arrowBottom)
-                    path.lineTo(arrowRight, arrowBottom)
+                    path.lineTo(arrowRight, contentBottom)
                 }
 
                 ArrowShape.CURVED -> {
@@ -345,10 +344,10 @@ private fun calculateArrowLeftPosition(
     val alignment = modifier.arrowAlignment
 
     var arrowLeft = when {
-        isHorizontalTopAligned(alignment) -> {
+        isVerticalLeftAligned(alignment) -> {
             contentLeft + modifier.arrowOffsetX
         }
-        isHorizontalBottomAligned(alignment) -> {
+        isVerticalRightAligned(alignment) -> {
             contentWidth + modifier.arrowOffsetX - arrowWidth
         }
         else -> {
@@ -409,6 +408,21 @@ internal fun isArrowHorizontalPosition(alignment: ArrowAlignment): Boolean {
 internal fun isVerticalBottomAligned(alignment: ArrowAlignment): Boolean {
     return alignment == ArrowAlignment.BOTTOM_LEFT || alignment == ArrowAlignment.BOTTOM_RIGHT || alignment == ArrowAlignment.BOTTOM_CENTER
 }
+
+/**
+ * Arrow is on left side of the bubble
+ */
+internal fun isVerticalLeftAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == ArrowAlignment.BOTTOM_LEFT)
+}
+
+/**
+ * Arrow is on right side of the bubble
+ */
+internal fun isVerticalRightAligned(alignment: ArrowAlignment): Boolean {
+    return (alignment == ArrowAlignment.BOTTOM_RIGHT)
+}
+
 
 /**
  * Check if arrow is vertically positioned either on top or at the bottom of bubble

@@ -75,8 +75,6 @@ class BubbleLayout : FrameLayout {
         }
 
 
-
-
         setWillNotDraw(false)
     }
 
@@ -121,7 +119,12 @@ class BubbleLayout : FrameLayout {
             val child: View? = getChildAt(i)
             child?.measure(widthMeasureSpec, heightMeasureSpec)
             child?.let { child ->
-                println("🔥 onMeasure child #$i measuredWidth: ${child.measuredWidth}, width: ${child.width}, measuredHeight: ${child.measuredHeight}, height: ${child.height}")
+                println(
+                    "🔥 onMeasure child #$i, " +
+                            "measuredWidth: ${child.measuredWidth}, width: ${child.width}, " +
+                            "measuredHeight: ${child.measuredHeight}, height: ${child.height}"
+                )
+
                 if (child.measuredWidth > maxContentWidth) maxContentWidth = child.measuredWidth
                 maxContentHeight += child.measuredHeight
             }
@@ -136,11 +139,9 @@ class BubbleLayout : FrameLayout {
             desiredWidth += modifier.arrowWidth.toInt()
         }
 
-
-        if (isVerticalBottomAligned) maxContentHeight += modifier.arrowHeight.toInt()
-
-        val desiredHeight: Int =
+        var desiredHeight: Int =
             resolveSize(maxContentHeight, heightMeasureSpec) + paddingTop + paddingBottom
+        if (isVerticalBottomAligned) desiredHeight += modifier.arrowHeight.toInt()
 
         when {
             isHorizontalLeftAligned -> {
@@ -168,7 +169,7 @@ class BubbleLayout : FrameLayout {
                     0f,
                     0f,
                     maxContentWidth.toFloat() + paddingStart + paddingEnd,
-                    maxContentHeight.toFloat() + modifier.arrowHeight+ paddingTop + paddingBottom
+                    maxContentHeight.toFloat() + paddingTop + paddingBottom
                 )
             }
 
@@ -261,10 +262,10 @@ class BubbleLayout : FrameLayout {
 
         canvas.drawPath(path, paint)
 
-        paintDebug.color = Color.RED
-        canvas.drawRect(rectBubble, paintDebug)
-        paintDebug.color = Color.BLUE
-        canvas.drawRect(rectContent, paintDebug)
+//        paintDebug.color = Color.RED
+//        canvas.drawRect(rectBubble, paintDebug)
+//        paintDebug.color = Color.BLUE
+//        canvas.drawRect(rectContent, paintDebug)
 
         if (modifier.shadowStyle == ShadowStyle.ELEVATION) {
             outlineProvider = outlineProvider
@@ -380,7 +381,7 @@ private fun getRoundedRectPath(
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
 
             }
-            LEFT_BOTTOM -> {
+            LEFT_BOTTOM, BOTTOM_LEFT -> {
 
                 val radiusBottomLeftX =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
@@ -421,7 +422,7 @@ private fun getRoundedRectPath(
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
             }
 
-            RIGHT_BOTTOM -> {
+            RIGHT_BOTTOM, BOTTOM_RIGHT -> {
 
                 val radiusBottomRightX =
                     if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX

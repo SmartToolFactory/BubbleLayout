@@ -12,15 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:elevation="1dp"
+        android:layout_marginTop="10dp"
+        android:elevation="2dp"
         android:padding="8dp">
 
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TODAY" />
+            android:text="Arrow NONE" />
 
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
@@ -228,17 +228,104 @@
 
 
     <com.smarttoolfactory.bubblelayout.BubbleLayout
-        android:id="@+id/bubbleViewBottom"
+        android:id="@+id/bubbleViewBottom1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="4dp"
-        android:elevation="1dp">
+        android:layout_gravity="center"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:elevation="1dp"
+        android:padding="6dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Arrow BOTTOM_LEFT" />
+            android:text="Arrow BOTTOM_CENTER"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewBottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:elevation="3dp"
+        android:padding="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow BOTTOM_LEFT"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleViewBottom3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:elevation="1dp"
+        android:padding="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow BOTTOM_RIGHT"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleCustomRad1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow Custom radius1"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleCustomRad2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow Custom radius2"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLayout
+        android:id="@+id/bubbleCustomRad3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow Custom radius3"
+            android:textColor="@color/white" />
     </com.smarttoolfactory.bubblelayout.BubbleLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
