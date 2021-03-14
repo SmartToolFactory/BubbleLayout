@@ -145,15 +145,11 @@ class MainActivity : AppCompatActivity() {
             backgroundColor = Color.rgb(92, 107, 192)
             arrowAlignment = ArrowAlignment.LEFT_TOP
             withArrow = false
-            cornerRadius = CornerRadius(
-                topLeftX = dp(24f),
-                topLeftY = dp(24f),
-                topRightX = dp(16f),
-                topRightY = dp(16f),
-                bottomLeftX = dp(2f),
-                bottomLeftY = dp(2f),
-                bottomRightX = dp(16f),
-                bottomRightY = dp(16f)
+            cornerRadiusBundle = CornerRadius(
+                topLeft = dp(24f),
+                topRight = dp(16f),
+                bottomLeft = dp(2f),
+                bottomRight = dp(16f)
             )
         }
 
@@ -166,15 +162,11 @@ class MainActivity : AppCompatActivity() {
             arrowAlignment = ArrowAlignment.LEFT_TOP
             withArrow = false
 
-            cornerRadius = CornerRadius(
-                topLeftX = dp(2f),
-                topLeftY = dp(2f),
-                topRightX = dp(16f),
-                topRightY = dp(16f),
-                bottomLeftX = dp(2f),
-                bottomLeftY = dp(2f),
-                bottomRightX = dp(16f),
-                bottomRightY = dp(16f)
+            cornerRadiusBundle = CornerRadius(
+                topLeft = dp(2f),
+                topRight = dp(16f),
+                bottomLeft = dp(2f),
+                bottomRight = dp(16f)
             )
         }
         bubbleCustomRad2.update(modifierCR2)
@@ -184,15 +176,11 @@ class MainActivity : AppCompatActivity() {
             backgroundColor = Color.rgb(92, 107, 192)
             arrowAlignment = ArrowAlignment.LEFT_TOP
             withArrow = false
-            cornerRadius = CornerRadius(
-                topLeftX = dp(2f),
-                topLeftY = dp(2f),
-                topRightX = dp(16f),
-                topRightY = dp(16f),
-                bottomLeftX = dp(8f),
-                bottomLeftY = dp(8f),
-                bottomRightX = dp(16f),
-                bottomRightY = dp(16f)
+            cornerRadiusBundle = CornerRadius(
+                topLeft = dp(2f),
+                topRight = dp(16f),
+                bottomLeft = dp(8f),
+                bottomRight = dp(16f)
             )
         }
         bubbleCustomRad3.update(modifierCR3)

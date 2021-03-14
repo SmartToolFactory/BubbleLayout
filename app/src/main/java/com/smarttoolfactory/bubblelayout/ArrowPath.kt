@@ -9,7 +9,7 @@ import android.graphics.RectF
 fun createHorizontalArrowPath(
     path: Path,
     contentRect: RectF,
-    modifier: Modifier
+    modifier: BubbleModifier
 ) {
     val alignment = modifier.arrowAlignment
     if (alignment == ArrowAlignment.NONE) return
@@ -23,8 +23,8 @@ fun createHorizontalArrowPath(
 
     // Height of the arrow is limited to height of the bubble
     val arrowHeight =
-        if (modifier.arrowHeight + modifier.radiusY * 2 > contentHeight)
-            contentHeight - modifier.radiusY * 2 else modifier.arrowHeight
+        if (modifier.arrowHeight + modifier.cornerRadius * 2 > contentHeight)
+            contentHeight - modifier.cornerRadius * 2 else modifier.arrowHeight
 
 
     // This is offset from top/bottom or center for arrows on left or right.
@@ -190,7 +190,7 @@ fun createHorizontalArrowPath(
  * Calculate top position of the arrow on either left or right side
  */
 private fun calculateArrowTopPosition(
-    modifier: Modifier,
+    modifier: BubbleModifier,
     arrowHeight: Float,
     contentTop: Float,
     contentHeight: Float
@@ -222,7 +222,7 @@ private fun calculateArrowTopPosition(
 /**
  * Create path for arrow that is at the bottom of the bubble
  */
-fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) {
+fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModifier) {
 
     val alignment = modifier.arrowAlignment
 
@@ -238,15 +238,15 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) 
 
     // Width of the arrow is limited to height of the bubble
     val arrowWidth =
-        if (modifier.arrowWidth + modifier.radiusX * 2 > contentWidth)
-            contentWidth - modifier.radiusX * 2 else modifier.arrowWidth
+        if (modifier.arrowWidth + modifier.cornerRadius * 2 > contentWidth)
+            contentWidth - modifier.cornerRadius * 2 else modifier.arrowWidth
 
 
     val arrowHeight = modifier.arrowHeight
 
 
-    if (modifier.arrowHeight + modifier.radiusY * 2 > contentHeight)
-        contentHeight - modifier.radiusY * 2 else modifier.arrowHeight
+    if (modifier.arrowHeight + modifier.cornerRadius * 2 > contentHeight)
+        contentHeight - modifier.cornerRadius * 2 else modifier.arrowHeight
 
 
     val arrowLeft = calculateArrowLeftPosition(modifier, arrowWidth, contentLeft, contentWidth)
@@ -335,7 +335,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: Modifier) 
 }
 
 private fun calculateArrowLeftPosition(
-    modifier: Modifier,
+    modifier: BubbleModifier,
     arrowWidth: Float,
     contentLeft: Float,
     contentWidth: Float

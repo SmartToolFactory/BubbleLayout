@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.view.View
 import androidx.fragment.app.Fragment
 
-class Modifier {
+class BubbleModifier {
 
     /**
      * Scale to set initial values as dp
@@ -18,22 +18,18 @@ class Modifier {
      */
     var backgroundColor: Int = Color.rgb(220, 248, 198)
 
-    /**
-     * Corner radius of bubble layout for x axis. Setter for this property uses pixel
-     */
-    var radiusX = 8f
 
 
     /**
      * Corner radius of bubble layout for y axis
      */
-    var radiusY = 8f
+    var cornerRadius = 8f
 
     /**
      * Custom corner radius for each side of the rectangle, if this is not null parameters
      * of this data class is used to draw rounded rectangle.
      */
-    var cornerRadius: CornerRadius? = null
+    var cornerRadiusBundle: CornerRadius? = null
 
 
     /**
@@ -93,8 +89,7 @@ class Modifier {
     var shadowOffsetY: Float = 0f
 
     fun init() {
-        radiusX *= dp
-        radiusY *= dp
+        cornerRadius *= dp
 
         arrowWidth *= dp
         arrowHeight *= dp
@@ -110,14 +105,10 @@ class Modifier {
 }
 
 class CornerRadius(
-    val topLeftX: Float = 0f,
-    val topLeftY: Float = 0f,
-    val topRightX: Float = 0f,
-    val topRightY: Float = 0f,
-    val bottomLeftX: Float = 0f,
-    val bottomLeftY: Float = 0f,
-    val bottomRightX: Float = 0f,
-    val bottomRightY: Float = 0f
+    val topLeft: Float = 0f,
+    val topRight: Float = 0f,
+    val bottomLeft: Float = 0f,
+    val bottomRight: Float = 0f
 )
 
 enum class ShadowStyle {

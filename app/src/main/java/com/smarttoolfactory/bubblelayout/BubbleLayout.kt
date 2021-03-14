@@ -12,11 +12,11 @@ import com.smarttoolfactory.bubblelayout.ArrowAlignment.*
 /**
  * Linear layout that draws chat or speech bubble with specified properties.
  *
- * Properties are encapsulated inside [Modifier]
+ * Properties are encapsulated inside [BubbleModifier]
  */
 class BubbleLayout : FrameLayout {
 
-    lateinit var modifier: Modifier
+    lateinit var modifier: BubbleModifier
 
     private val paint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -68,7 +68,7 @@ class BubbleLayout : FrameLayout {
 
     init {
 
-        modifier = Modifier()
+        modifier = BubbleModifier()
 
         modifier.dp = dp(1f)
         modifier.init()
@@ -276,7 +276,7 @@ class BubbleLayout : FrameLayout {
         }
     }
 
-    fun update(modifier: Modifier) {
+    fun update(modifier: BubbleModifier) {
         this.modifier = modifier
         paint.color = modifier.backgroundColor
         invalidate()
@@ -309,7 +309,7 @@ class BubbleLayout : FrameLayout {
  */
 fun getBubbleClipPath(
     path: Path,
-    modifier: Modifier,
+    modifier: BubbleModifier,
     contentRect: RectF
 ) {
 
@@ -335,113 +335,107 @@ fun getBubbleClipPath(
 }
 
 private fun getRoundedRectPath(
-    modifier: Modifier,
+    modifier: BubbleModifier,
     path: Path,
     contentRect: RectF
 ) {
-    val alignment = modifier.arrowAlignment
 
-    val radiusX =
-        if (modifier.radiusX < contentRect.width() / 2) modifier.radiusX else contentRect.width() / 2
-    val radiusY =
-        if (modifier.radiusY < contentRect.height() / 2) modifier.radiusY else contentRect.height() / 2
-
-    modifier.cornerRadius?.let { cornerRadius ->
+    modifier.cornerRadiusBundle?.let { cornerRadius ->
 
         val radii = floatArrayOf(
-            cornerRadius.topLeftX,
-            cornerRadius.topLeftY,
-            cornerRadius.topRightX,
-            cornerRadius.topRightY,
-            cornerRadius.bottomRightX,
-            cornerRadius.bottomRightY,
-            cornerRadius.bottomLeftX,
-            cornerRadius.bottomLeftY
+            cornerRadius.topLeft,
+            cornerRadius.topLeft,
+            cornerRadius.topRight,
+            cornerRadius.topRight,
+            cornerRadius.bottomRight,
+            cornerRadius.bottomRight,
+            cornerRadius.bottomLeft,
+            cornerRadius.bottomLeft
         )
 
         path.addRoundRect(contentRect, radii, Path.Direction.CW)
 
     } ?: run {
+
+        val alignment = modifier.arrowAlignment
+
+        val radius =
+            if (modifier.cornerRadius < contentRect.height() / 2) modifier.cornerRadius else contentRect.height() / 2
+        
         when (alignment) {
 
             LEFT_TOP -> {
 
-                val radiusTopLeftX =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
+                val radiusTopLeft =
+                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
 
-                val radiusTopLeftY =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
+               
 
                 val radii = floatArrayOf(
-                    radiusTopLeftX,
-                    radiusTopLeftY,
-                    radiusX,
-                    radiusY,
-                    radiusX,
-                    radiusY,
-                    radiusX,
-                    radiusY
+                    radiusTopLeft,
+                    radiusTopLeft,
+                    radius,
+                    radius,
+                    radius,
+                    radius,
+                    radius,
+                    radius
                 )
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
 
             }
             LEFT_BOTTOM, BOTTOM_LEFT -> {
-
-                val radiusBottomLeftX =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val radiusBottomLeftY =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
-
+               
+                val radiusBottomLeft =
+                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
 
                 val radii = floatArrayOf(
-                    radiusX,
-                    radiusY,
-                    radiusX,
-                    radiusY,
-                    radiusX,
-                    radiusY,
-                    radiusBottomLeftX,
-                    radiusBottomLeftY
+                    radius,
+                    radius,
+                    radius,
+                    radius,
+                    radius,
+                    radius,
+                    radiusBottomLeft,
+                    radiusBottomLeft
                 )
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
             }
 
             RIGHT_TOP -> {
 
-                val radiusTopRightX =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val radiusTopRightY =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
+                val radiusTopRight =
+                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
+               
 
                 val radii = floatArrayOf(
-                    radiusX,
-                    radiusY,
-                    radiusTopRightX,
-                    radiusTopRightY,
-                    radiusX,
-                    radiusY,
-                    radiusX,
-                    radiusY
+                    radius,
+                    radius,
+                    radiusTopRight,
+                    radiusTopRight,
+                    radius,
+                    radius,
+                    radius,
+                    radius
                 )
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
             }
 
             RIGHT_BOTTOM, BOTTOM_RIGHT -> {
 
-                val radiusBottomRightX =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusX
-                val radiusBottomRightY =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radiusY) 0f else radiusY
+                val radiusBottomRight =
+                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
+             
 
                 val radii = floatArrayOf(
-                    radiusX,
-                    radiusY,
-                    radiusX,
-                    radiusY,
-                    radiusBottomRightX,
-                    radiusBottomRightY,
-                    radiusX,
-                    radiusY
+                    radius,
+                    radius,
+                    radius,
+                    radius,
+                    radiusBottomRight,
+                    radiusBottomRight,
+                    radius,
+                    radius
                 )
                 path.addRoundRect(contentRect, radii, Path.Direction.CW)
             }
@@ -449,8 +443,8 @@ private fun getRoundedRectPath(
             else -> {
                 path.addRoundRect(
                     contentRect,
-                    modifier.radiusX,
-                    modifier.radiusY,
+                    modifier.cornerRadius,
+                    modifier.cornerRadius,
                     Path.Direction.CW
                 )
             }
