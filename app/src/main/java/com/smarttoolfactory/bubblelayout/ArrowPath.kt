@@ -33,17 +33,21 @@ fun createHorizontalArrowPath(
     }
 
     // Height of the arrow is limited to height of the bubble
-    val arrowHeight =
-        if (modifier.arrowHeight + radiusSumOnArrowSide > contentHeight)
-            contentHeight - radiusSumOnArrowSide else modifier.arrowHeight
+//    val arrowHeight =
+//        if (modifier.arrowHeight + radiusSumOnArrowSide > contentHeight)
+//            contentHeight - radiusSumOnArrowSide else modifier.arrowHeight
 
+    val arrowHeight = modifier.arrowHeight.coerceAtMost(contentHeight)
+    modifier.arrowHeight = arrowHeight
 
     // This is offset from top/bottom or center for arrows on left or right.
     // Maximum offset + arrow height cannot be bigger
     // than bottom of bubble or smaller than top of bubble.
     val arrowTop = calculateArrowTopPosition(modifier, arrowHeight, contentTop, contentHeight)
+    modifier.arrowTop = arrowTop
 
     val arrowBottom = arrowTop + arrowHeight
+    modifier.arrowBottom = arrowBottom
 
     val arrowShape = modifier.arrowShape
 

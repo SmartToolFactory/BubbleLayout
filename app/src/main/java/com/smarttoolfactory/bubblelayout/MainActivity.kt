@@ -95,9 +95,9 @@ class MainActivity : AppCompatActivity() {
         val receiverBubble4 = findViewById<BubbleLayout>(R.id.bubbleViewReceiver4)
 
         val modifierR4 = receiverBubble4.modifier.apply {
-            arrowHeight = 30f.dp
-            cornerRadiusBundle.topLeft = dp(4f)
-            cornerRadiusBundle.bottomLeft = dp(4f)
+            arrowHeight = 24f.dp
+//            cornerRadiusBundle.topLeft = 0f
+//            cornerRadiusBundle.bottomLeft = 0f
             backgroundColor = Color.WHITE
             arrowAlignment = LEFT_CENTER
             arrowShape = ArrowShape.TRIANGLE_ISOSCELES

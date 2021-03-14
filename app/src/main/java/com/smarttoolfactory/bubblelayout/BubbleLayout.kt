@@ -357,6 +357,11 @@ class BubbleLayout : FrameLayout {
 
         canvas.drawPath(path, paint)
 
+        paintDebug.color = Color.RED
+        canvas.drawRect(rectBubble, paintDebug)
+        paintDebug.color = Color.BLUE
+        canvas.drawRect(rectContent, paintDebug)
+
         if (modifier.shadowStyle == ShadowStyle.ELEVATION) {
             outlineProvider = outlineProvider
         }
@@ -401,7 +406,6 @@ fun getBubbleClipPath(
 
     path.reset()
 
-    getRoundedRectPath(modifier, path, contentRect)
 
     if (modifier.withArrow) {
         if (isArrowHorizontalPosition(modifier.arrowAlignment)) {
@@ -418,6 +422,8 @@ fun getBubbleClipPath(
             )
         }
     }
+
+    getRoundedRectPath(modifier, path, contentRect)
 }
 
 private fun getRoundedRectPath(
@@ -439,28 +445,46 @@ private fun getRoundedRectPath(
         bottomLeft = min(bottomLeft, maxRadius)
     }
 
-    when (alignment) {
-        LEFT_TOP -> {
-            cornerRadius.topLeft =
-                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
-                else cornerRadius.topLeft
+    val isWithArrow = modifier.withArrow
+
+
+    if (isWithArrow) {
+        when (alignment) {
+            // Arrow on left side of the bubble
+            LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> {
+                cornerRadius.topLeft = min(
+                    modifier.arrowTop,
+                    cornerRadius.topLeft
+                )
+
+                cornerRadius.bottomLeft =
+                    min(cornerRadius.bottomLeft, (contentRect.height() - modifier.arrowBottom))
+            }
+
+            // Arrow on right side of the bubble
+            RIGHT_TOP, RIGHT_CENTER, RIGHT_BOTTOM -> {
+                cornerRadius.topRight = min(
+                    modifier.arrowTop,
+                    cornerRadius.topRight
+                )
+
+                cornerRadius.bottomRight =
+                    min(cornerRadius.bottomRight, (contentRect.height() - modifier.arrowBottom))
+            }
+
+            // Arrow at the bottom of bubble
+            BOTTOM_LEFT -> {
+                cornerRadius.bottomLeft =
+                    if (modifier.arrowOffsetY < maxRadius) 0f
+                    else cornerRadius.bottomLeft
+            }
+            BOTTOM_RIGHT -> {
+                cornerRadius.bottomRight =
+                    if (modifier.arrowOffsetY < maxRadius) 0f
+                    else cornerRadius.bottomRight
+            }
+            else -> Unit
         }
-        RIGHT_TOP -> {
-            cornerRadius.topRight =
-                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
-                else cornerRadius.topRight
-        }
-        LEFT_BOTTOM, BOTTOM_LEFT -> {
-            cornerRadius.bottomLeft =
-                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
-                else cornerRadius.bottomLeft
-        }
-        RIGHT_BOTTOM, BOTTOM_RIGHT -> {
-            cornerRadius.bottomRight =
-                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
-                else cornerRadius.bottomRight
-        }
-        else -> Unit
     }
 
     val radii = floatArrayOf(
