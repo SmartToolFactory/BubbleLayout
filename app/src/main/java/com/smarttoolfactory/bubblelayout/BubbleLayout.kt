@@ -357,10 +357,12 @@ class BubbleLayout : FrameLayout {
 
         canvas.drawPath(path, paint)
 
-        paintDebug.color = Color.RED
-        canvas.drawRect(rectBubble, paintDebug)
-        paintDebug.color = Color.BLUE
-        canvas.drawRect(rectContent, paintDebug)
+        if (isDebug) {
+            paintDebug.color = Color.RED
+            canvas.drawRect(rectBubble, paintDebug)
+            paintDebug.color = Color.BLUE
+            canvas.drawRect(rectContent, paintDebug)
+        }
 
         if (modifier.shadowStyle == ShadowStyle.ELEVATION) {
             outlineProvider = outlineProvider
