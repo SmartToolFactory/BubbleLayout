@@ -48,6 +48,16 @@ class BubbleModifier {
     var arrowAlignment: Int = NONE
 
 
+    /**
+     * Top position of arrow
+     */
+    var arrowTop: Float = 0f
+
+    /**
+     * Bottom position of arrow
+     */
+    var arrowBottom = 0f
+
     var arrowWidth: Float = 14.0f
     var arrowHeight: Float = 14.0f
     var arrowRadius: Float = 0.0f
@@ -118,7 +128,6 @@ class BubbleModifier {
         shadowOffsetX *= dp
         shadowOffsetY *= dp
     }
-
 }
 
 class CornerRadius(
@@ -203,4 +212,3 @@ fun View.dp(dpValue: Int): Int {
         (dpValue + 0.5f)
     }.toInt()
 }
-

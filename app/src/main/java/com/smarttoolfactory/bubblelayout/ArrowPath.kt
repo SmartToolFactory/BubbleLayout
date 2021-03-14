@@ -21,10 +21,21 @@ fun createHorizontalArrowPath(
 
     val arrowWidth = modifier.arrowWidth
 
+    val cornerRadius = modifier.cornerRadiusBundle
+
+    val radiusSumOnArrowSide = when {
+        isHorizontalLeftAligned(alignment) -> {
+            cornerRadius.topLeft + cornerRadius.bottomLeft
+        }
+        else -> {
+            cornerRadius.topRight + cornerRadius.bottomRight
+        }
+    }
+
     // Height of the arrow is limited to height of the bubble
     val arrowHeight =
-        if (modifier.arrowHeight + modifier.cornerRadius * 2 > contentHeight)
-            contentHeight - modifier.cornerRadius * 2 else modifier.arrowHeight
+        if (modifier.arrowHeight + radiusSumOnArrowSide > contentHeight)
+            contentHeight - radiusSumOnArrowSide else modifier.arrowHeight
 
 
     // This is offset from top/bottom or center for arrows on left or right.
@@ -181,7 +192,6 @@ fun createHorizontalArrowPath(
 
         else -> Unit
     }
-
     path.close()
 }
 
@@ -215,9 +225,7 @@ private fun calculateArrowTopPosition(
     if (arrowTop + arrowHeight > contentHeight) arrowTop = contentHeight - arrowHeight
 
     return arrowTop
-
 }
-
 
 /**
  * Create path for arrow that is at the bottom of the bubble
@@ -236,18 +244,19 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
     val contentTop = contentRect.top
     val contentBottom = contentRect.bottom
 
-    // Width of the arrow is limited to height of the bubble
-    val arrowWidth =
-        if (modifier.arrowWidth + modifier.cornerRadius * 2 > contentWidth)
-            contentWidth - modifier.cornerRadius * 2 else modifier.arrowWidth
+    val cornerRadius = modifier.cornerRadiusBundle
 
+    // TODO This is for bottom arrow, we take only bottom corners to have space to draw arrow
+    val radiusSumOnArrowSide = cornerRadius.bottomLeft + cornerRadius.bottomRight
+
+    // Width of the arrow is limited to height of the bubble minus sum of corner radius
+    // of top and bottom in respective side
+
+    val arrowWidth =
+        if (modifier.arrowWidth + radiusSumOnArrowSide > contentWidth)
+            contentWidth - radiusSumOnArrowSide else modifier.arrowWidth
 
     val arrowHeight = modifier.arrowHeight
-
-
-    if (modifier.arrowHeight + modifier.cornerRadius * 2 > contentHeight)
-        contentHeight - modifier.cornerRadius * 2 else modifier.arrowHeight
-
 
     val arrowLeft = calculateArrowLeftPosition(modifier, arrowWidth, contentLeft, contentWidth)
     val arrowRight = arrowLeft + arrowWidth
@@ -256,9 +265,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
     val arrowShape = modifier.arrowShape
 
     when (alignment) {
-
         BOTTOM_LEFT -> {
-
             path.moveTo(arrowLeft, contentBottom)
 
             when (arrowShape) {
@@ -281,7 +288,6 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
         }
 
         BOTTOM_RIGHT -> {
-
             path.moveTo(arrowLeft, contentBottom)
 
             when (arrowShape) {
@@ -302,9 +308,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
             }
         }
 
-
         BOTTOM_CENTER -> {
-
             path.moveTo(arrowLeft, contentBottom)
 
             when (arrowShape) {
@@ -324,14 +328,12 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
 
                 }
             }
-
         }
 
         else -> Unit
     }
 
     path.close()
-
 }
 
 private fun calculateArrowLeftPosition(
@@ -360,9 +362,7 @@ private fun calculateArrowLeftPosition(
     if (arrowLeft + arrowWidth > contentWidth) arrowLeft = contentWidth - arrowWidth
 
     return arrowLeft
-
 }
-
 
 /**
  * Arrow is on left side of the bubble
@@ -422,7 +422,6 @@ internal fun isVerticalLeftAligned(alignment: Int): Boolean {
 internal fun isVerticalRightAligned(alignment: Int): Boolean {
     return (alignment == BOTTOM_RIGHT)
 }
-
 
 /**
  * Check if arrow is vertically positioned either on top or at the bottom of bubble

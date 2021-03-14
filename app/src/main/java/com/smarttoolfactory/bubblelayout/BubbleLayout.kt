@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
+import kotlin.math.min
 
 /**
  * Linear layout that draws chat or speech bubble with specified properties.
@@ -71,6 +72,26 @@ class BubbleLayout : FrameLayout {
                 R.styleable.BubbleLayout_cornerRadius,
                 modifier.cornerRadius
             )
+
+        modifier.cornerRadiusBundle.topLeft = typedArray.getDimension(
+            R.styleable.BubbleLayout_cornerRadiusTopLeft,
+            modifier.cornerRadius
+        )
+
+        modifier.cornerRadiusBundle.topRight = typedArray.getDimension(
+            R.styleable.BubbleLayout_cornerRadiusTopRight,
+            modifier.cornerRadius
+        )
+
+        modifier.cornerRadiusBundle.bottomRight = typedArray.getDimension(
+            R.styleable.BubbleLayout_cornerRadiusBottomRight,
+            modifier.cornerRadius
+        )
+
+        modifier.cornerRadiusBundle.bottomLeft = typedArray.getDimension(
+            R.styleable.BubbleLayout_cornerRadiusBottomLeft,
+            modifier.cornerRadius
+        )
 
         // Arrow
         modifier.arrowAlignment = typedArray.getInt(R.styleable.BubbleLayout_arrowAlignment, NONE)
@@ -405,111 +426,53 @@ private fun getRoundedRectPath(
     contentRect: RectF
 ) {
 
-    modifier.cornerRadiusBundle?.let { cornerRadius ->
+    val alignment = modifier.arrowAlignment
 
-        val radii = floatArrayOf(
-            cornerRadius.topLeft,
-            cornerRadius.topLeft,
-            cornerRadius.topRight,
-            cornerRadius.topRight,
-            cornerRadius.bottomRight,
-            cornerRadius.bottomRight,
-            cornerRadius.bottomLeft,
-            cornerRadius.bottomLeft
-        )
+    val cornerRadius = modifier.cornerRadiusBundle
 
-        path.addRoundRect(contentRect, radii, Path.Direction.CW)
+    val maxRadius = contentRect.height() / 2f
 
-    } ?: run {
-
-        val alignment = modifier.arrowAlignment
-
-        val radius =
-            if (modifier.cornerRadius < contentRect.height() / 2) modifier.cornerRadius else contentRect.height() / 2
-
-        when (alignment) {
-
-            LEFT_TOP -> {
-
-                val radiusTopLeft =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-
-                val radii = floatArrayOf(
-                    radiusTopLeft,
-                    radiusTopLeft,
-                    radius,
-                    radius,
-                    radius,
-                    radius,
-                    radius,
-                    radius
-                )
-                path.addRoundRect(contentRect, radii, Path.Direction.CW)
-
-            }
-            LEFT_BOTTOM, BOTTOM_LEFT -> {
-
-                val radiusBottomLeft =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-
-                val radii = floatArrayOf(
-                    radius,
-                    radius,
-                    radius,
-                    radius,
-                    radius,
-                    radius,
-                    radiusBottomLeft,
-                    radiusBottomLeft
-                )
-                path.addRoundRect(contentRect, radii, Path.Direction.CW)
-            }
-
-            RIGHT_TOP -> {
-
-                val radiusTopRight =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-
-
-                val radii = floatArrayOf(
-                    radius,
-                    radius,
-                    radiusTopRight,
-                    radiusTopRight,
-                    radius,
-                    radius,
-                    radius,
-                    radius
-                )
-                path.addRoundRect(contentRect, radii, Path.Direction.CW)
-            }
-
-            RIGHT_BOTTOM, BOTTOM_RIGHT -> {
-
-                val radiusBottomRight =
-                    if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-
-                val radii = floatArrayOf(
-                    radius,
-                    radius,
-                    radius,
-                    radius,
-                    radiusBottomRight,
-                    radiusBottomRight,
-                    radius,
-                    radius
-                )
-                path.addRoundRect(contentRect, radii, Path.Direction.CW)
-            }
-
-            else -> {
-                path.addRoundRect(
-                    contentRect,
-                    modifier.cornerRadius,
-                    modifier.cornerRadius,
-                    Path.Direction.CW
-                )
-            }
-        }
+    cornerRadius.apply {
+        topLeft = min(topLeft, maxRadius)
+        topRight = min(topRight, maxRadius)
+        bottomRight = min(bottomRight, maxRadius)
+        bottomLeft = min(bottomLeft, maxRadius)
     }
+
+    when (alignment) {
+        LEFT_TOP -> {
+            cornerRadius.topLeft =
+                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
+                else cornerRadius.topLeft
+        }
+        RIGHT_TOP -> {
+            cornerRadius.topRight =
+                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
+                else cornerRadius.topRight
+        }
+        LEFT_BOTTOM, BOTTOM_LEFT -> {
+            cornerRadius.bottomLeft =
+                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
+                else cornerRadius.bottomLeft
+        }
+        RIGHT_BOTTOM, BOTTOM_RIGHT -> {
+            cornerRadius.bottomRight =
+                if (modifier.withArrow && modifier.arrowOffsetY < maxRadius) 0f
+                else cornerRadius.bottomRight
+        }
+        else -> Unit
+    }
+
+    val radii = floatArrayOf(
+        cornerRadius.topLeft,
+        cornerRadius.topLeft,
+        cornerRadius.topRight,
+        cornerRadius.topRight,
+        cornerRadius.bottomRight,
+        cornerRadius.bottomRight,
+        cornerRadius.bottomLeft,
+        cornerRadius.bottomLeft
+    )
+
+    path.addRoundRect(contentRect, radii, Path.Direction.CW)
 }
