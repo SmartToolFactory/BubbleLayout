@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
-import com.smarttoolfactory.bubblelayout.ArrowAlignment.*
 
 /**
  * Linear layout that draws chat or speech bubble with specified properties.
@@ -54,21 +53,86 @@ class BubbleLayout : FrameLayout {
     var isDebug = false
 
     constructor(context: Context) : super(context) {
-
+        modifier = BubbleModifier()
+        init()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BubbleLayout)
 
+        modifier = BubbleModifier()
+
+        modifier.backgroundColor = typedArray.getColor(
+            R.styleable.BubbleLayout_android_background,
+            modifier.backgroundColor
+        )
+        modifier.cornerRadius =
+            typedArray.getDimension(
+                R.styleable.BubbleLayout_cornerRadius,
+                modifier.cornerRadius
+            )
+
+        // Arrow
+        modifier.arrowAlignment = typedArray.getInt(R.styleable.BubbleLayout_arrowAlignment, NONE)
+
+        modifier.arrowWidth =
+            typedArray.getDimension(R.styleable.BubbleLayout_arrowWidth, modifier.arrowWidth)
+        modifier.arrowHeight =
+            typedArray.getDimension(R.styleable.BubbleLayout_arrowHeight, modifier.arrowHeight)
+        modifier.arrowRadius =
+            typedArray.getDimension(R.styleable.BubbleLayout_arrowRadius, modifier.arrowRadius)
+
+        val arrowShape =
+            typedArray.getInt(R.styleable.BubbleLayout_arrowShape, modifier.arrowShape.ordinal)
+
+        modifier.arrowShape = when (arrowShape) {
+            0 -> ArrowShape.TRIANGLE_RIGHT
+            1 -> ArrowShape.TRIANGLE_ISOSCELES
+            else -> ArrowShape.CURVED
+        }
+        modifier.arrowOffsetY =
+            typedArray.getDimension(R.styleable.BubbleLayout_arrowOffsetY, modifier.arrowOffsetY)
+        modifier.arrowOffsetX =
+            typedArray.getDimension(R.styleable.BubbleLayout_arrowOffsetY, modifier.arrowOffsetX)
+        modifier.withArrow =
+            typedArray.getBoolean(R.styleable.BubbleLayout_withArrow, modifier.withArrow)
+
+        // Elevation/Shadow
+        val shadowStyle =
+            typedArray.getInt(R.styleable.BubbleLayout_shadowStyle, modifier.shadowStyle.ordinal)
+
+        modifier.shadowStyle = if (shadowStyle == ShadowStyle.ELEVATION.ordinal) {
+            ShadowStyle.ELEVATION
+        } else ShadowStyle.SHADOW
+
+
+        if (modifier.shadowStyle == ShadowStyle.SHADOW) {
+            modifier.shadowColor =
+                typedArray.getColor(
+                    R.styleable.BubbleLayout_android_shadowColor,
+                    modifier.shadowColor
+                )
+            modifier.shadowRadius = typedArray.getFloat(
+                R.styleable.BubbleLayout_android_shadowRadius,
+                modifier.shadowRadius
+            )
+            modifier.shadowRadius = typedArray.getFloat(
+                R.styleable.BubbleLayout_android_shadowDx,
+                modifier.shadowOffsetX
+            )
+            modifier.shadowRadius = typedArray.getFloat(
+                R.styleable.BubbleLayout_android_shadowDy,
+                modifier.shadowOffsetY
+            )
+        }
 
         typedArray.recycle()
 
+        init()
     }
 
 
-    init {
-
-        modifier = BubbleModifier()
+    private fun init() {
 
         modifier.dp = dp(1f)
         modifier.init()
@@ -199,11 +263,12 @@ class BubbleLayout : FrameLayout {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        val alignment = modifier.arrowAlignment
-        layoutChildren(alignment)
+        layoutChildren(modifier)
     }
 
-    private fun layoutChildren(alignment: ArrowAlignment) {
+    private fun layoutChildren(modifier: BubbleModifier) {
+
+        val alignment = modifier.arrowAlignment
 
         val isHorizontalRightAligned = isHorizontalRightAligned(alignment)
         val isHorizontalLeftAligned = isHorizontalLeftAligned(alignment)
@@ -361,15 +426,13 @@ private fun getRoundedRectPath(
 
         val radius =
             if (modifier.cornerRadius < contentRect.height() / 2) modifier.cornerRadius else contentRect.height() / 2
-        
+
         when (alignment) {
 
             LEFT_TOP -> {
 
                 val radiusTopLeft =
                     if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-
-               
 
                 val radii = floatArrayOf(
                     radiusTopLeft,
@@ -385,7 +448,7 @@ private fun getRoundedRectPath(
 
             }
             LEFT_BOTTOM, BOTTOM_LEFT -> {
-               
+
                 val radiusBottomLeft =
                     if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
 
@@ -406,7 +469,7 @@ private fun getRoundedRectPath(
 
                 val radiusTopRight =
                     if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-               
+
 
                 val radii = floatArrayOf(
                     radius,
@@ -425,7 +488,6 @@ private fun getRoundedRectPath(
 
                 val radiusBottomRight =
                     if (modifier.withArrow && modifier.arrowOffsetY < radius) 0f else radius
-             
 
                 val radii = floatArrayOf(
                     radius,
@@ -450,6 +512,4 @@ private fun getRoundedRectPath(
             }
         }
     }
-
-
 }

@@ -18,25 +18,34 @@ class BubbleModifier {
      */
     var backgroundColor: Int = Color.rgb(220, 248, 198)
 
-
-
     /**
      * Corner radius of bubble layout for y axis
      */
     var cornerRadius = 8f
+        set(value) {
+            cornerRadiusBundle.topLeft = cornerRadius
+            cornerRadiusBundle.topRight = cornerRadius
+            cornerRadiusBundle.bottomRight = cornerRadius
+            cornerRadiusBundle.bottomLeft = cornerRadius
+            field = value
+        }
 
     /**
      * Custom corner radius for each side of the rectangle, if this is not null parameters
      * of this data class is used to draw rounded rectangle.
      */
-    var cornerRadiusBundle: CornerRadius? = null
-
+    var cornerRadiusBundle: CornerRadius = CornerRadius(
+        topLeft = cornerRadius,
+        topRight = cornerRadius,
+        bottomLeft = cornerRadius,
+        bottomRight = cornerRadius
+    )
 
     /**
      * Arrow alignment determines in which side of the bubble this arrow should be drawn.
-     * When [ArrowAlignment.NONE] is selected no arrow is drawn
+     * When [NONE] is selected no arrow is drawn
      */
-    var arrowAlignment: ArrowAlignment = ArrowAlignment.NONE
+    var arrowAlignment: Int = NONE
 
 
     var arrowWidth: Float = 14.0f
@@ -89,7 +98,15 @@ class BubbleModifier {
     var shadowOffsetY: Float = 0f
 
     fun init() {
+
         cornerRadius *= dp
+
+        cornerRadiusBundle.apply {
+            topLeft = cornerRadius
+            topRight = cornerRadius
+            bottomLeft = cornerRadius
+            bottomRight = cornerRadius
+        }
 
         arrowWidth *= dp
         arrowHeight *= dp
@@ -105,10 +122,10 @@ class BubbleModifier {
 }
 
 class CornerRadius(
-    val topLeft: Float = 0f,
-    val topRight: Float = 0f,
-    val bottomLeft: Float = 0f,
-    val bottomRight: Float = 0f
+    var topLeft: Float = 0f,
+    var topRight: Float = 0f,
+    var bottomLeft: Float = 0f,
+    var bottomRight: Float = 0f
 )
 
 enum class ShadowStyle {
@@ -122,18 +139,16 @@ enum class ArrowShape {
     CURVED
 }
 
-enum class ArrowAlignment {
-    LEFT_TOP,
-    LEFT_BOTTOM,
-    LEFT_CENTER,
-    RIGHT_TOP,
-    RIGHT_BOTTOM,
-    RIGHT_CENTER,
-    BOTTOM_LEFT,
-    BOTTOM_RIGHT,
-    BOTTOM_CENTER,
-    NONE
-}
+const val NONE = 0
+const val LEFT_TOP = 1
+const val LEFT_CENTER = 2
+const val LEFT_BOTTOM = 3
+const val RIGHT_TOP = 4
+const val RIGHT_CENTER = 5
+const val RIGHT_BOTTOM = 6
+const val BOTTOM_LEFT = 7
+const val BOTTOM_CENTER = 8
+const val BOTTOM_RIGHT = 9
 
 fun Activity.dp(dpValue: Float): Float {
     return try {
@@ -161,7 +176,6 @@ fun View.dp(dpValue: Float): Float {
         (dpValue + 0.5f)
     }
 }
-
 
 fun Activity.dp(dpValue: Int): Int {
     return try {

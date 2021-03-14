@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val dateBubble = findViewById<BubbleLayout>(R.id.bubbleDate)
         dateBubble.modifier.apply {
-            arrowAlignment = ArrowAlignment.NONE
+            arrowAlignment = NONE
             backgroundColor = Color.rgb(212, 234, 244)
         }
         dateBubble.update(modifier = dateBubble.modifier)
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
          */
         val senderBubble1 = findViewById<BubbleLayout>(R.id.bubbleViewSender)
         senderBubble1.modifier.apply {
-            arrowAlignment = ArrowAlignment.RIGHT_TOP
+            arrowAlignment = RIGHT_TOP
             arrowOffsetY = 18f
         }
 
@@ -36,14 +36,14 @@ class MainActivity : AppCompatActivity() {
 
         val senderBubble2 = findViewById<BubbleLayout>(R.id.bubbleViewSender2)
         senderBubble2.modifier.apply {
-            arrowAlignment = ArrowAlignment.RIGHT_BOTTOM
+            arrowAlignment = RIGHT_BOTTOM
         }
 
         senderBubble2.update(modifier = senderBubble2.modifier)
 
         val senderBubble3 = findViewById<BubbleLayout>(R.id.bubbleViewSender3)
         senderBubble3.modifier.apply {
-            arrowAlignment = ArrowAlignment.RIGHT_BOTTOM
+            arrowAlignment = RIGHT_BOTTOM
             withArrow = false
         }
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val senderBubble4 = findViewById<BubbleLayout>(R.id.bubbleViewSender4)
         senderBubble4.modifier.apply {
-            arrowAlignment = ArrowAlignment.RIGHT_CENTER
+            arrowAlignment = RIGHT_CENTER
             arrowShape = ArrowShape.TRIANGLE_ISOSCELES
         }
 
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR1 = receiverBubble.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.LEFT_BOTTOM
+            arrowAlignment = LEFT_BOTTOM
             arrowOffsetY = -dp(5f)
         }
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR2 = receiverBubble2.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.LEFT_TOP
+            arrowAlignment = LEFT_TOP
         }
 
         receiverBubble2.update(modifierR2)
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR3 = receiverBubble3.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.LEFT_TOP
+            arrowAlignment = LEFT_TOP
             withArrow = false
         }
 
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR4 = receiverBubble4.modifier.apply {
             backgroundColor = Color.WHITE
-            arrowAlignment = ArrowAlignment.LEFT_CENTER
+            arrowAlignment = LEFT_CENTER
             arrowShape = ArrowShape.TRIANGLE_ISOSCELES
         }
 
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierBottom1 = bubbleBottom1.modifier.apply {
             backgroundColor = Color.rgb(251, 192, 45)
-            arrowAlignment = ArrowAlignment.BOTTOM_CENTER
+            arrowAlignment = BOTTOM_CENTER
             arrowShape = ArrowShape.TRIANGLE_ISOSCELES
 
         }
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         val bubbleBottom2 = findViewById<BubbleLayout>(R.id.bubbleViewBottom2)
         val modifierBottom2 = bubbleBottom2.modifier.apply {
             backgroundColor = Color.rgb(142, 36, 170)
-            arrowAlignment = ArrowAlignment.BOTTOM_LEFT
+            arrowAlignment = BOTTOM_LEFT
             arrowShape = ArrowShape.TRIANGLE_RIGHT
             arrowWidth = dp(48f)
             arrowHeight = dp(16f)
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         val bubbleBottom3 = findViewById<BubbleLayout>(R.id.bubbleViewBottom3)
         val modifierBottom3 = bubbleBottom3.modifier.apply {
             backgroundColor = Color.rgb(0, 121, 107)
-            arrowAlignment = ArrowAlignment.BOTTOM_RIGHT
+            arrowAlignment = BOTTOM_RIGHT
             arrowShape = ArrowShape.TRIANGLE_RIGHT
         }
         bubbleBottom3.update(modifierBottom3)
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierCR1 = bubbleCustomRad1.modifier.apply {
             backgroundColor = Color.rgb(92, 107, 192)
-            arrowAlignment = ArrowAlignment.LEFT_TOP
+            arrowAlignment = LEFT_TOP
             withArrow = false
             cornerRadiusBundle = CornerRadius(
                 topLeft = dp(24f),
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
 
         val modifierCR2 = bubbleCustomRad2.modifier.apply {
             backgroundColor = Color.rgb(92, 107, 192)
-            arrowAlignment = ArrowAlignment.LEFT_TOP
+            arrowAlignment = LEFT_TOP
             withArrow = false
 
             cornerRadiusBundle = CornerRadius(
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         val bubbleCustomRad3 = findViewById<BubbleLayout>(R.id.bubbleCustomRad3)
         val modifierCR3 = bubbleCustomRad3.modifier.apply {
             backgroundColor = Color.rgb(92, 107, 192)
-            arrowAlignment = ArrowAlignment.LEFT_TOP
+            arrowAlignment = LEFT_TOP
             withArrow = false
             cornerRadiusBundle = CornerRadius(
                 topLeft = dp(2f),
@@ -188,5 +188,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val Float.dp
+        get() = this@MainActivity.dp(this)
+
+    private val Int.dp
         get() = this@MainActivity.dp(this)
 }

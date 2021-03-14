@@ -11,16 +11,16 @@
         <attr name="cornerRadiusBottomLeft" format="dimension" />
 
         <attr name="arrowAlignment" format="enum">
-            <enum name="None" value="0" />
-            <enum name="LeftTop" value="1" />
-            <enum name="LeftCenter" value="2" />
-            <enum name="LeftBottom" value="3" />
-            <enum name="RightTop" value="4" />
-            <enum name="RightCenter" value="5" />
-            <enum name="RightBottom" value="6" />
-            <enum name="TopLeft" value="7" />
-            <enum name="TopCenter" value="8" />
-            <enum name="TopBottom" value="9" />
+            <enum name="none" value="0" />
+            <enum name="leftTop" value="1" />
+            <enum name="leftCenter" value="2" />
+            <enum name="leftBottom" value="3" />
+            <enum name="rightTop" value="4" />
+            <enum name="rightCenter" value="5" />
+            <enum name="rightBottom" value="6" />
+            <enum name="topLeft" value="7" />
+            <enum name="topCenter" value="8" />
+            <enum name="topBottom" value="9" />
         </attr>
 
         <attr name="arrowShape" format="enum">
@@ -36,9 +36,14 @@
         <attr name="arrowOffsetY" format="dimension" />
         <attr name="withArrow" format="boolean" />
 
-        <attr name="shadow_radius" format="dimension" />
-        <attr name="shadow_offset_x" format="dimension" />
-        <attr name="shadow_offset_y" format="dimension" />
-        <attr name="shadow_color" format="color" />
+        <attr name="shadowStyle" format="enum">
+            <enum name="elevation" value="0" />
+            <enum name="shadow" value="1" />
+        </attr>
+
+        <attr name="android:shadowRadius" format="dimension" />
+        <attr name="android:shadowDx" format="dimension" />
+        <attr name="android:shadowDy" format="dimension" />
+        <attr name="android:shadowColor" format="color" />
     </declare-styleable>
 </resources>

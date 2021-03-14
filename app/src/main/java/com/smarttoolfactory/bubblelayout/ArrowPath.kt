@@ -12,7 +12,7 @@ fun createHorizontalArrowPath(
     modifier: BubbleModifier
 ) {
     val alignment = modifier.arrowAlignment
-    if (alignment == ArrowAlignment.NONE) return
+    if (alignment == NONE) return
 
     val contentHeight = contentRect.height()
     val contentLeft = contentRect.left
@@ -38,7 +38,7 @@ fun createHorizontalArrowPath(
 
     when (alignment) {
 
-        ArrowAlignment.LEFT_TOP -> {
+        LEFT_TOP -> {
             // move to top of arrow at the top of left corner
             path.moveTo(contentLeft, arrowTop)
 
@@ -61,7 +61,7 @@ fun createHorizontalArrowPath(
             }
         }
 
-        ArrowAlignment.LEFT_BOTTOM -> {
+        LEFT_BOTTOM -> {
 
             // move to top of arrow at the bottom left corner
             path.moveTo(contentLeft, arrowTop)
@@ -86,7 +86,7 @@ fun createHorizontalArrowPath(
             }
         }
 
-        ArrowAlignment.LEFT_CENTER -> {
+        LEFT_CENTER -> {
 
             // move to top of arrow at the top of left corner
             path.moveTo(contentLeft, arrowTop)
@@ -110,7 +110,7 @@ fun createHorizontalArrowPath(
             }
         }
 
-        ArrowAlignment.RIGHT_TOP -> {
+        RIGHT_TOP -> {
 
             // move to top right corner of the content
             path.moveTo(contentRight, arrowTop)
@@ -133,7 +133,7 @@ fun createHorizontalArrowPath(
             }
         }
 
-        ArrowAlignment.RIGHT_BOTTOM -> {
+        RIGHT_BOTTOM -> {
 
             // move to bottom right corner of the content
             path.moveTo(contentRight, arrowTop)
@@ -156,7 +156,7 @@ fun createHorizontalArrowPath(
             }
         }
 
-        ArrowAlignment.RIGHT_CENTER -> {
+        RIGHT_CENTER -> {
 
             // move to top right corner of the content
             path.moveTo(contentRight, arrowTop)
@@ -226,7 +226,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
 
     val alignment = modifier.arrowAlignment
 
-    if (alignment == ArrowAlignment.NONE) return
+    if (alignment == NONE) return
 
     val contentHeight = contentRect.height()
     val contentWidth = contentRect.width()
@@ -257,7 +257,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
 
     when (alignment) {
 
-        ArrowAlignment.BOTTOM_LEFT -> {
+        BOTTOM_LEFT -> {
 
             path.moveTo(arrowLeft, contentBottom)
 
@@ -280,7 +280,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
 
         }
 
-        ArrowAlignment.BOTTOM_RIGHT -> {
+        BOTTOM_RIGHT -> {
 
             path.moveTo(arrowLeft, contentBottom)
 
@@ -303,7 +303,7 @@ fun createVerticalArrowPath(path: Path, contentRect: RectF, modifier: BubbleModi
         }
 
 
-        ArrowAlignment.BOTTOM_CENTER -> {
+        BOTTOM_CENTER -> {
 
             path.moveTo(arrowLeft, contentBottom)
 
@@ -367,66 +367,66 @@ private fun calculateArrowLeftPosition(
 /**
  * Arrow is on left side of the bubble
  */
-internal fun isHorizontalLeftAligned(alignment: ArrowAlignment): Boolean {
-    return (alignment == ArrowAlignment.LEFT_TOP
-            || alignment == ArrowAlignment.LEFT_BOTTOM
-            || alignment == ArrowAlignment.LEFT_CENTER)
+internal fun isHorizontalLeftAligned(alignment: Int): Boolean {
+    return (alignment == LEFT_TOP
+            || alignment == LEFT_BOTTOM
+            || alignment == LEFT_CENTER)
 }
 
 /**
  * Arrow is on right side of the bubble
  */
-internal fun isHorizontalRightAligned(alignment: ArrowAlignment): Boolean {
-    return (alignment == ArrowAlignment.RIGHT_TOP
-            || alignment == ArrowAlignment.RIGHT_BOTTOM
-            || alignment == ArrowAlignment.RIGHT_CENTER)
+internal fun isHorizontalRightAligned(alignment: Int): Boolean {
+    return (alignment == RIGHT_TOP
+            || alignment == RIGHT_BOTTOM
+            || alignment == RIGHT_CENTER)
 }
 
 /**
  * Arrow is on top left or right side of the bubble
  */
-private fun isHorizontalTopAligned(alignment: ArrowAlignment): Boolean {
-    return (alignment == ArrowAlignment.LEFT_TOP || alignment == ArrowAlignment.RIGHT_TOP)
+private fun isHorizontalTopAligned(alignment: Int): Boolean {
+    return (alignment == LEFT_TOP || alignment == RIGHT_TOP)
 }
 
 /**
  * Arrow is on top left or right side of the bubble
  */
-private fun isHorizontalBottomAligned(alignment: ArrowAlignment): Boolean {
-    return (alignment == ArrowAlignment.LEFT_BOTTOM || alignment == ArrowAlignment.RIGHT_BOTTOM)
+private fun isHorizontalBottomAligned(alignment: Int): Boolean {
+    return (alignment == LEFT_BOTTOM || alignment == RIGHT_BOTTOM)
 }
 
 
 /**
  * Check if arrow is horizontally positioned either on left or right side
  */
-internal fun isArrowHorizontalPosition(alignment: ArrowAlignment): Boolean {
+internal fun isArrowHorizontalPosition(alignment: Int): Boolean {
     return isHorizontalLeftAligned(alignment)
             || isHorizontalRightAligned(alignment)
 }
 
-internal fun isVerticalBottomAligned(alignment: ArrowAlignment): Boolean {
-    return alignment == ArrowAlignment.BOTTOM_LEFT || alignment == ArrowAlignment.BOTTOM_RIGHT || alignment == ArrowAlignment.BOTTOM_CENTER
+internal fun isVerticalBottomAligned(alignment: Int): Boolean {
+    return alignment == BOTTOM_LEFT || alignment == BOTTOM_RIGHT || alignment == BOTTOM_CENTER
 }
 
 /**
  * Arrow is on left side of the bubble
  */
-internal fun isVerticalLeftAligned(alignment: ArrowAlignment): Boolean {
-    return (alignment == ArrowAlignment.BOTTOM_LEFT)
+internal fun isVerticalLeftAligned(alignment: Int): Boolean {
+    return (alignment == BOTTOM_LEFT)
 }
 
 /**
  * Arrow is on right side of the bubble
  */
-internal fun isVerticalRightAligned(alignment: ArrowAlignment): Boolean {
-    return (alignment == ArrowAlignment.BOTTOM_RIGHT)
+internal fun isVerticalRightAligned(alignment: Int): Boolean {
+    return (alignment == BOTTOM_RIGHT)
 }
 
 
 /**
  * Check if arrow is vertically positioned either on top or at the bottom of bubble
  */
-internal fun isArrowVerticalPosition(alignment: ArrowAlignment): Boolean {
+internal fun isArrowVerticalPosition(alignment: Int): Boolean {
     return isVerticalBottomAligned(alignment)
 }
