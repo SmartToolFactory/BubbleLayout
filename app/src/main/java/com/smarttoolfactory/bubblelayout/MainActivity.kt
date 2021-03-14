@@ -8,10 +8,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         drawBubbles()
-
-
     }
 
     private fun drawBubbles() {
@@ -23,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
         dateBubble.update(modifier = dateBubble.modifier)
 
+        dateBubble.paddingStart
 
         /*
             Sent bubble
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val modifierR1 = receiverBubble.modifier.apply {
             backgroundColor = Color.WHITE
             arrowAlignment = ArrowAlignment.LEFT_BOTTOM
-            arrowOffsetY = -20f
+            arrowOffsetY = -dp(5f)
         }
 
         receiverBubble.update(modifierR1)
@@ -112,7 +110,8 @@ class MainActivity : AppCompatActivity() {
 
         val modifierBottom1 = bubbleBottom1.modifier.apply {
             backgroundColor = Color.rgb(251, 192, 45)
-            arrowAlignment = ArrowAlignment.LEFT_TOP
+            arrowAlignment = ArrowAlignment.BOTTOM_CENTER
+            arrowShape = ArrowShape.TRIANGLE_ISOSCELES
 
         }
         bubbleBottom1.update(modifierBottom1)
@@ -122,8 +121,8 @@ class MainActivity : AppCompatActivity() {
             backgroundColor = Color.rgb(142, 36, 170)
             arrowAlignment = ArrowAlignment.BOTTOM_LEFT
             arrowShape = ArrowShape.TRIANGLE_RIGHT
-            arrowWidth = 35f
-            arrowHeight = 40f
+            arrowWidth = dp(48f)
+            arrowHeight = dp(16f)
         }
         bubbleBottom2.update(modifierBottom2)
 
@@ -143,18 +142,18 @@ class MainActivity : AppCompatActivity() {
         val bubbleCustomRad1 = findViewById<BubbleLayout>(R.id.bubbleCustomRad1)
 
         val modifierCR1 = bubbleCustomRad1.modifier.apply {
-            backgroundColor = Color.rgb(92,107,192)
+            backgroundColor = Color.rgb(92, 107, 192)
             arrowAlignment = ArrowAlignment.LEFT_TOP
             withArrow = false
             cornerRadius = CornerRadius(
-                topLeftX = 50f,
-                topLeftY = 50f,
-                topRightX = 24f,
-                topRightY = 24f,
-                bottomLeftX = 8f,
-                bottomLeftY = 8f,
-                bottomRightX = 24f,
-                bottomRightY = 24f
+                topLeftX = dp(24f),
+                topLeftY = dp(24f),
+                topRightX = dp(16f),
+                topRightY = dp(16f),
+                bottomLeftX = dp(2f),
+                bottomLeftY = dp(2f),
+                bottomRightX = dp(16f),
+                bottomRightY = dp(16f)
             )
         }
 
@@ -163,40 +162,43 @@ class MainActivity : AppCompatActivity() {
         val bubbleCustomRad2 = findViewById<BubbleLayout>(R.id.bubbleCustomRad2)
 
         val modifierCR2 = bubbleCustomRad2.modifier.apply {
-            backgroundColor = Color.rgb(92,107,192)
+            backgroundColor = Color.rgb(92, 107, 192)
             arrowAlignment = ArrowAlignment.LEFT_TOP
             withArrow = false
 
             cornerRadius = CornerRadius(
-                topLeftX = 8f,
-                topLeftY = 8f,
-                topRightX = 24f,
-                topRightY = 24f,
-                bottomLeftX = 8f,
-                bottomLeftY = 8f,
-                bottomRightX = 24f,
-                bottomRightY = 24f
+                topLeftX = dp(2f),
+                topLeftY = dp(2f),
+                topRightX = dp(16f),
+                topRightY = dp(16f),
+                bottomLeftX = dp(2f),
+                bottomLeftY = dp(2f),
+                bottomRightX = dp(16f),
+                bottomRightY = dp(16f)
             )
         }
         bubbleCustomRad2.update(modifierCR2)
 
         val bubbleCustomRad3 = findViewById<BubbleLayout>(R.id.bubbleCustomRad3)
         val modifierCR3 = bubbleCustomRad3.modifier.apply {
-            backgroundColor = Color.rgb(92,107,192)
+            backgroundColor = Color.rgb(92, 107, 192)
             arrowAlignment = ArrowAlignment.LEFT_TOP
             withArrow = false
             cornerRadius = CornerRadius(
-                topLeftX = 8f,
-                topLeftY = 8f,
-                topRightX = 24f,
-                topRightY = 24f,
-                bottomLeftX = 24f,
-                bottomLeftY = 24f,
-                bottomRightX = 24f,
-                bottomRightY = 24f
+                topLeftX = dp(2f),
+                topLeftY = dp(2f),
+                topRightX = dp(16f),
+                topRightY = dp(16f),
+                bottomLeftX = dp(8f),
+                bottomLeftY = dp(8f),
+                bottomRightX = dp(16f),
+                bottomRightY = dp(16f)
             )
         }
         bubbleCustomRad3.update(modifierCR3)
 
     }
+
+    private val Float.dp
+        get() = this@MainActivity.dp(this)
 }

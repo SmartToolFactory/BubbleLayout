@@ -1,9 +1,17 @@
 package com.smarttoolfactory.bubblelayout
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.Paint
+import android.view.View
+import androidx.fragment.app.Fragment
 
 class Modifier {
+
+    /**
+     * Scale to set initial values as dp
+     */
+    internal var dp: Float = 1f
 
     /**
      * Background of Bubble
@@ -11,9 +19,10 @@ class Modifier {
     var backgroundColor: Int = Color.rgb(220, 248, 198)
 
     /**
-     * Corner radius of bubble layout for x axis
+     * Corner radius of bubble layout for x axis. Setter for this property uses pixel
      */
     var radiusX = 8f
+
 
     /**
      * Corner radius of bubble layout for y axis
@@ -26,12 +35,14 @@ class Modifier {
      */
     var cornerRadius: CornerRadius? = null
 
-    /**
-     * Scale to set initial values as dp
-     */
-//    var dp: Float = 1f
 
+    /**
+     * Arrow alignment determines in which side of the bubble this arrow should be drawn.
+     * When [ArrowAlignment.NONE] is selected no arrow is drawn
+     */
     var arrowAlignment: ArrowAlignment = ArrowAlignment.NONE
+
+
     var arrowWidth: Float = 14.0f
     var arrowHeight: Float = 14.0f
     var arrowRadius: Float = 0.0f
@@ -55,6 +66,7 @@ class Modifier {
      */
     var arrowOffsetX: Float = 0f
 
+
     /**
      * If set to true an arrow is drawn depending on it's alignment, horizontal and vertical
      * offset.
@@ -75,12 +87,29 @@ class Modifier {
     var shadowColor: Int = Color.argb(55, 55, 55, 55)
 
     var shadowRadius: Float = 0f
+
     var shadowOffsetX: Float = 0f
+
     var shadowOffsetY: Float = 0f
+
+    fun init() {
+        radiusX *= dp
+        radiusY *= dp
+
+        arrowWidth *= dp
+        arrowHeight *= dp
+        arrowRadius *= dp
+        arrowOffsetY *= dp
+        arrowOffsetX *= dp
+
+        shadowRadius *= dp
+        shadowOffsetX *= dp
+        shadowOffsetY *= dp
+    }
 
 }
 
-data class CornerRadius(
+class CornerRadius(
     val topLeftX: Float = 0f,
     val topLeftY: Float = 0f,
     val topRightX: Float = 0f,
@@ -114,3 +143,59 @@ enum class ArrowAlignment {
     BOTTOM_CENTER,
     NONE
 }
+
+fun Activity.dp(dpValue: Float): Float {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }
+}
+
+fun Fragment.dp(dpValue: Float): Float {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }
+}
+
+fun View.dp(dpValue: Float): Float {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }
+}
+
+
+fun Activity.dp(dpValue: Int): Int {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }.toInt()
+}
+
+fun Fragment.dp(dpValue: Int): Int {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }.toInt()
+}
+
+fun View.dp(dpValue: Int): Int {
+    return try {
+        val scale = resources.displayMetrics.density
+        (dpValue * scale + 0.5f)
+    } catch (e: Exception) {
+        (dpValue + 0.5f)
+    }.toInt()
+}
+

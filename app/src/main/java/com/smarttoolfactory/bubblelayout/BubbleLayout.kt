@@ -16,11 +16,13 @@ import com.smarttoolfactory.bubblelayout.ArrowAlignment.*
  */
 class BubbleLayout : FrameLayout {
 
-    var modifier: Modifier = Modifier()
+    lateinit var modifier: Modifier
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
-        color = modifier.backgroundColor
+    private val paint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.FILL
+            color = modifier.backgroundColor
+        }
     }
 
     private val paintDebug by lazy {
@@ -51,17 +53,25 @@ class BubbleLayout : FrameLayout {
      */
     var isDebug = false
 
-    constructor(context: Context) : super(context)
+    constructor(context: Context) : super(context) {
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BubbleLayout)
+
+
+        typedArray.recycle()
+
+    }
 
 
     init {
-        modifier.arrowWidth = context.dp2Px(modifier.arrowWidth)
-        modifier.arrowHeight = context.dp2Px(modifier.arrowHeight)
-        modifier.radiusX = context.dp2Px(modifier.radiusX)
-        modifier.radiusY = context.dp2Px(modifier.radiusY)
 
+        modifier = Modifier()
+
+        modifier.dp = dp(1f)
+        modifier.init()
 
         if (modifier.shadowStyle == ShadowStyle.SHADOW) {
 
@@ -73,7 +83,6 @@ class BubbleLayout : FrameLayout {
                 modifier.shadowColor
             )
         }
-
 
         setWillNotDraw(false)
     }
@@ -262,11 +271,6 @@ class BubbleLayout : FrameLayout {
 
         canvas.drawPath(path, paint)
 
-//        paintDebug.color = Color.RED
-//        canvas.drawRect(rectBubble, paintDebug)
-//        paintDebug.color = Color.BLUE
-//        canvas.drawRect(rectContent, paintDebug)
-
         if (modifier.shadowStyle == ShadowStyle.ELEVATION) {
             outlineProvider = outlineProvider
         }
@@ -352,7 +356,7 @@ private fun getRoundedRectPath(
             cornerRadius.bottomRightX,
             cornerRadius.bottomRightY,
             cornerRadius.bottomLeftX,
-            cornerRadius.bottomRightY
+            cornerRadius.bottomLeftY
         )
 
         path.addRoundRect(contentRect, radii, Path.Direction.CW)
@@ -452,17 +456,6 @@ private fun getRoundedRectPath(
             }
         }
     }
-}
 
 
-/**
- * Convert density to pixel to draw on Canvas
- */
-fun Context.dp2Px(dpValue: Float): Float {
-    return try {
-        val scale = resources.displayMetrics.density
-        (dpValue * scale + 0.5f)
-    } catch (e: Exception) {
-        (dpValue + 0.5f)
-    }
 }
