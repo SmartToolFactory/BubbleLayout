@@ -62,6 +62,7 @@ class BubbleLayout : FrameLayout {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BubbleLayout)
 
         modifier = BubbleModifier()
+        init()
 
         modifier.backgroundColor = typedArray.getColor(
             R.styleable.BubbleLayout_android_background,
@@ -149,11 +150,10 @@ class BubbleLayout : FrameLayout {
 
         typedArray.recycle()
 
-        init(false)
     }
 
 
-    private fun init(updateModifier: Boolean = true) {
+    private fun init() {
 
         background = null
 
