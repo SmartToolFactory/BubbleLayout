@@ -1,10 +1,7 @@
 package com.smarttoolfactory.bubblelayout
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 
@@ -40,10 +37,10 @@ class CurveDrawView : View {
         val yfinal = 200f
 
         val x3 = (xfinal - x1)
-        val y3 = (yfinal - y1)*.9f
+        val y3 = (yfinal - y1) * .9f
 
         val x2 = (x1 + x3) / 4
-        val y2 = (y1 + y3) *3/4
+        val y2 = (y1 + y3) * 3 / 4
 
 
         path.moveTo(x1, y1)
@@ -56,12 +53,11 @@ class CurveDrawView : View {
         canvas.drawPath(path, paint)
 
         paint.color = Color.YELLOW
-        canvas.drawLine(x1,y1,x2,y2,paint)
+        canvas.drawLine(x1, y1, x2, y2, paint)
         paint.color = Color.GREEN
-        canvas.drawLine(x2,y2,x3,y3,paint)
+        canvas.drawLine(x2, y2, x3, y3, paint)
         paint.color = Color.BLUE
-        canvas.drawLine(x3,y3,xfinal,yfinal,paint)
-
+        canvas.drawLine(x3, y3, xfinal, yfinal, paint)
 
 
 //        path.moveTo(50f, 50f)
@@ -70,6 +66,22 @@ class CurveDrawView : View {
 
 
         canvas.drawCircle(500f, 500f, 50f, paint)
+
+        val rect = RectF()
+
+        rect.set(width.toFloat() - 50f, 300f, width.toFloat(), 330f)
+
+        path.moveTo(width.toFloat(), 300f)
+        path.lineTo(width.toFloat()- 50f, 300f)
+        path.addArc(rect, 270f, -180f)
+        path.lineTo(width.toFloat(), 330f)
+
+        paint.style = Paint.Style.STROKE
+        paint.color = Color.RED
+        canvas.drawRect(rect, paint)
+        paint.color = Color.YELLOW
+        canvas.drawPath(path, paint)
+
     }
 
 

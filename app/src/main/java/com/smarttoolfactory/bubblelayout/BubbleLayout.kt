@@ -149,13 +149,16 @@ class BubbleLayout : FrameLayout {
 
         typedArray.recycle()
 
-        init()
+        init(false)
     }
 
 
-    private fun init() {
+    private fun init(updateModifier: Boolean = true) {
+
+        background = null
 
         modifier.dp = dp(1f)
+
         modifier.init()
 
         if (modifier.shadowStyle == ShadowStyle.SHADOW) {

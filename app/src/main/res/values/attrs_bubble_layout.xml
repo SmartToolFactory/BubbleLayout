@@ -18,9 +18,12 @@
             <enum name="rightTop" value="4" />
             <enum name="rightCenter" value="5" />
             <enum name="rightBottom" value="6" />
-            <enum name="topLeft" value="7" />
-            <enum name="topCenter" value="8" />
-            <enum name="topBottom" value="9" />
+            <enum name="bottomLeft" value="7" />
+            <enum name="bottomCenter" value="8" />
+            <enum name="bottomRight" value="9" />
+            <enum name="topLeft" value="10" />
+            <enum name="topCenter" value="11" />
+            <enum name="topBottom" value="12" />
         </attr>
 
         <attr name="arrowShape" format="enum">

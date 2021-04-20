@@ -8,7 +8,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        drawBubbles()
+//        drawBubbles()
     }
 
     private fun drawBubbles() {
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val senderBubble1 = findViewById<BubbleLayout>(R.id.bubbleViewSender)
         senderBubble1.modifier.apply {
             arrowAlignment = RIGHT_TOP
-            arrowOffsetY = 18f
+            arrowOffsetY = dp(5f)
         }
 
         senderBubble1.update(modifier = senderBubble1.modifier)
@@ -96,8 +96,6 @@ class MainActivity : AppCompatActivity() {
 
         val modifierR4 = receiverBubble4.modifier.apply {
             arrowHeight = 24f.dp
-//            cornerRadiusBundle.topLeft = 0f
-//            cornerRadiusBundle.bottomLeft = 0f
             backgroundColor = Color.WHITE
             arrowAlignment = LEFT_CENTER
             arrowShape = ArrowShape.TRIANGLE_ISOSCELES
