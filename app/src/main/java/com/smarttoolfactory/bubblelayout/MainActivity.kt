@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         /*
             Alternative 2- Draw bubbles with XML properties
          */
-        setContentView(R.layout.activity_main_with_attrs)
+        setContentView(R.layout.activity_main_bubble_linear_with_attrs)
     }
 
     private fun drawBubbles() {

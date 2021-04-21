@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ece5dd"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="#d4eaf4"
+        android:elevation="2dp"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow NONE" />
+
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:elevation="1dp"
+        app:arrowAlignment="rightTop"
+        app:arrowOffsetY="5dp">
+
+
+
+            <TextView
+                android:id="@+id/tvSender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Arrow RIGHT_TOP with offset 5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end|bottom"
+                android:text="12:01"
+                android:textColor="#888" />
+
+
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewSender2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="4dp"
+        android:elevation="2dp"
+        app:arrowAlignment="rightBottom">
+
+
+            <TextView
+                android:id="@+id/tvSender2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Arrow RIGHT_BOTTOM" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="12:01"
+                android:textColor="#888" />
+
+
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewSender3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="4dp"
+        android:elevation="5dp"
+        app:arrowAlignment="rightCenter"
+        app:withArrow="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/tvSender3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Arrow RIGHT_BOTTOM withArrow=false" />
+        </LinearLayout>
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewSender4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="4dp"
+        android:elevation="5dp"
+        app:arrowAlignment="rightCenter"
+        app:arrowShape="TriangleIsosceles">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/tvSender4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Arrow RIGHT_CENTER" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="12:01"
+                android:textColor="#888" />
+
+
+        </LinearLayout>
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <!-- RECEIVED BUBBLES-->
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewReceiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:padding="8dp"
+        app:arrowAlignment="leftBottom"
+        app:arrowOffsetY="-5dp">
+
+        <TextView
+            android:id="@+id/tvReceiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow LEFT_BOTTOM offset=-8dp" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewReceiver2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:padding="8dp"
+        app:arrowAlignment="leftTop">
+
+        <TextView
+            android:id="@+id/tvReceiver2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow LEFT_TOP" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewReceiver3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:padding="8dp"
+        app:arrowAlignment="leftTop"
+        app:withArrow="false">
+
+        <TextView
+            android:id="@+id/tvReceiver3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow LEFT_TOP withArrow=false" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewReceiver4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:padding="8dp"
+        app:arrowAlignment="leftCenter"
+        app:arrowShape="TriangleIsosceles">
+
+        <TextView
+            android:id="@+id/tvReceiver4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow LEFT_CENTER" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewBottom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:background="#fbc02d"
+        android:elevation="1dp"
+        android:padding="6dp"
+        app:arrowAlignment="bottomCenter"
+        app:arrowShape="TriangleIsosceles">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow BOTTOM_CENTER"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewBottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:background="#8e24aa"
+        android:elevation="3dp"
+        android:padding="6dp"
+        app:arrowAlignment="bottomLeft"
+        app:arrowHeight="16dp"
+        app:arrowShape="TriangleRight"
+        app:arrowWidth="48dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow BOTTOM_LEFT"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleViewBottom3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:background="#00796b"
+        android:elevation="1dp"
+        android:padding="6dp"
+        app:arrowAlignment="bottomRight">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow BOTTOM_RIGHT"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleCustomRad1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:background="#5c6bc0"
+        android:padding="12dp"
+        app:arrowAlignment="leftTop"
+        app:cornerRadiusBottomLeft="2dp"
+        app:cornerRadiusBottomRight="16dp"
+        app:cornerRadiusTopLeft="24dp"
+        app:cornerRadiusTopRight="16dp"
+        app:withArrow="false">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow Custom radius1"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleCustomRad2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:background="#5c6bc0"
+        android:padding="12dp"
+        app:arrowAlignment="leftTop"
+        app:cornerRadiusBottomLeft="2dp"
+        app:cornerRadiusBottomRight="16dp"
+        app:cornerRadiusTopLeft="2dp"
+        app:cornerRadiusTopRight="16dp"
+        app:withArrow="false">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow Custom radius2"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+    <com.smarttoolfactory.bubblelayout.BubbleLinearLayout
+        android:id="@+id/bubbleCustomRad3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:background="#5c6bc0"
+        android:padding="12dp"
+        app:arrowAlignment="leftTop"
+        app:cornerRadiusBottomLeft="8dp"
+        app:cornerRadiusBottomRight="16dp"
+        app:cornerRadiusTopLeft="2dp"
+        app:cornerRadiusTopRight="16dp"
+        app:withArrow="false">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrow Custom radius3"
+            android:textColor="@color/white" />
+    </com.smarttoolfactory.bubblelayout.BubbleLinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

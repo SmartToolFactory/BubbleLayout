@@ -7,14 +7,14 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
-import kotlin.math.min
+import android.widget.LinearLayout
 
 /**
  * Linear layout that draws chat or speech bubble with specified properties.
  *
  * Properties are encapsulated inside [BubbleModifier]
  */
-class BubbleLayout : FrameLayout {
+class BubbleLinearLayout : FrameLayout {
 
     lateinit var modifier: BubbleModifier
 
@@ -151,7 +151,6 @@ class BubbleLayout : FrameLayout {
         typedArray.recycle()
 
     }
-
 
     private fun init() {
 
@@ -298,6 +297,8 @@ class BubbleLayout : FrameLayout {
         val isHorizontalLeftAligned = isHorizontalLeftAligned(alignment)
         val isVerticalBottomAligned = isVerticalBottomAligned(alignment)
 
+        var childTop = 0
+
         when {
 
             // Arrow on left side
@@ -305,13 +306,18 @@ class BubbleLayout : FrameLayout {
                 for (i in 0..childCount) {
                     val child: View? = getChildAt(i)
                     child?.let { child ->
+
+
                         child.layout(
                             (paddingStart + modifier.arrowWidth).toInt(),
-                            paddingTop,
-                            (paddingStart + child.width + modifier.arrowWidth).toInt(),
+                            childTop + paddingTop,
+                            (childTop + paddingStart + child.width + modifier.arrowWidth).toInt(),
                             paddingTop + child.height
                         )
+
+                        childTop += child.height
                     }
+
                 }
             }
 
@@ -323,10 +329,12 @@ class BubbleLayout : FrameLayout {
                     child?.let { child ->
                         child.layout(
                             paddingStart,
-                            paddingTop,
+                            childTop + paddingTop,
                             paddingStart + child.width,
-                            paddingTop + child.height
+                            childTop + paddingTop + child.height
                         )
+
+                        childTop += child.height
                     }
                 }
             }
@@ -340,8 +348,10 @@ class BubbleLayout : FrameLayout {
                             paddingStart,
                             paddingTop,
                             paddingStart + child.width,
-                            (paddingTop + child.height + modifier.arrowHeight).toInt()
+                            (childTop + paddingTop + child.height + modifier.arrowHeight).toInt()
                         )
+
+                        childTop += child.height
                     }
                 }
             }
